@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Keranjang - D'GAMES | Kelompok 5</title>
+    <!-- tailwind css-->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #0a0c10;
+            scroll-behavior: smooth;
+        }
+        * {
+            font-family: 'Inter', system-ui, sans-serif;
+        }
+        .btn-epic {
+            background: linear-gradient(95deg, #0078f0 0%, #00b2ff 100%);
+            transition: all 0.2s;
+        }
+        .btn-epic:hover {
+            filter: brightness(1.08);
+            transform: scale(0.98);
+            box-shadow: 0 8px 20px rgba(0, 120, 240, 0.4);
+        }
+        .btn-outline-epic {
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(20, 20, 30, 0.6);
+            backdrop-filter: blur(4px);
+        }
+        .btn-outline-epic:hover {
+            background: rgba(0, 120, 240, 0.25);
+            border-color: #0078f0;
+        }
+        .cart-item {
+            transition: all 0.3s ease;
+        }
+        .cart-item:hover {
+            background: rgba(255,255,255,0.05);
+            transform: translateX(5px);
+        }
+        .quantity-btn {
+            transition: all 0.2s ease;
+        }
+        .quantity-btn:hover {
+            background: #0078f0;
+            color: white;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .cart-container {
+            animation: fadeIn 0.5s ease-out;
+        }
+    </style>
+</head>
+<body class="bg-[#121417] text-gray-300">
+     <nav class="sticky top-0 z-50 bg-black/95 backdrop-blur-md border-b border-white/10 shadow-xl">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Left section: Logo + Navigation Menu -->
+                <div class="flex items-center gap-6">
+                    <a href="denis.html" class="shrink-0">
+                        <img src="image/LOGO.png" alt="D'GAMES" class="h-8 w-auto">
+                    </a>
+                    <div class="hidden md:flex items-center space-x-1">
+                        <a href="denis.html" class="px-4 py-2 text-sm font-medium text-gray-300 hover:text-white hover:bg-white/10 rounded-lg transition">Home</a>
+                        <a href="games.html" class="px-4 py-2 text-sm font-semibold rounded-lg bg-white/5 text-white">Games</a>
+                        <a href="promo.html" class="px-4 py-2 text-sm font-medium text-gray-300 hover:text-white hover:bg-white/10 rounded-lg transition">Promo</a>
+                        <a href="library.html" class="px-4 py-2 text-sm font-medium text-gray-300 hover:text-white hover:bg-white/10 rounded-lg transition">Library</a>
+                        <a href="community.html" class="px-4 py-2 text-sm font-medium text-gray-300 hover:text-white hover:bg-white/10 rounded-lg transition">Community</a>
+                    </div>
+                </div>
+                
+                <!-- Right section: Search, Notif, Cart, Login -->
+                <div class="flex items-center gap-3">
+                    <button id="searchBtn" class="p-2 rounded-full text-gray-300 hover:bg-white/10 transition" aria-label="Search">
+                        <i class="bi bi-search text-xl"></i>
+                    </button>
+                    <button id="notifBtn" class="p-2 rounded-full text-gray-300 hover:bg-white/10 transition relative" aria-label="Notifications">
+                        <i class="bi bi-bell text-xl"></i>
+                        <span id="notifDot" class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full ring-2 ring-black"></span>
+                    </button>
+                    <button class="p-2 rounded-full text-gray-300 hover:bg-white/10 transition relative cart-button" aria-label="Cart">
+                        <i class="bi bi-cart text-xl"></i>
+                        <span class="cart-badge absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold ring-2 ring-black">0</span>
+                    </button>
+                    <div id="loginButton" class="hidden md:block text-xs px-3 py-1.5 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/30 cursor-pointer transition hover:bg-blue-500/30">
+                        <i class="bi bi-person-check-fill mr-1"></i> Login
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div class="md:hidden px-4 pb-2">
+            <button id="mobile-menu-button" class="text-gray-300 hover:text-white focus:outline-none">
+                <i class="bi bi-list text-2xl"></i>
+            </button>
+            <div id="mobile-nav-links" class="hidden mt-2 pb-3 space-y-1 border-t border-white/10 pt-3">
+                <a href="denis.html" class="block px-3 py-2 rounded-lg bg-white/5 text-white font-medium">Home</a>
+                <a href="games.html" class="block px-3 py-2 rounded-lg text-gray-300 hover:bg-white/10">Games</a>
+                <a href="promo.html" class="block px-3 py-2 rounded-lg text-gray-300 hover:bg-white/10">Promo</a>
+                <a href="library.html" class="block px-3 py-2 rounded-lg text-gray-300 hover:bg-white/10">Library</a>
+                <a href="community.html" class="block px-3 py-2 rounded-lg text-gray-300 hover:bg-white/10">Community</a>
+            </div>
+        </div>
+    </nav>
+    
+
+    <!-- Cart Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 cart-container">
+        <!-- Header -->
+        <div class="mb-8">
+            <div class="flex items-center gap-3 mb-2">
+                <i class="bi bi-cart3 text-3xl text-blue-400"></i>
+                <h1 class="text-3xl md:text-4xl font-bold text-white">Shopping Cart</h1>
+            </div>
+            <p class="text-gray-400">Review your items before checkout</p>
+            <div class="w-20 h-1 bg-blue-500 mt-4 rounded-full"></div>
+        </div>
+
+        <!-- Cart Items -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Cart Items List -->
+            <div class="lg:col-span-2 space-y-4">
+                <!-- Item 1 - Valorant -->
+                <div class="cart-item bg-gradient-to-r from-gray-900/50 to-gray-950/50 rounded-xl border border-gray-800 p-4">
+                    <div class="flex gap-4">
+                        <img src="image/valorant.jpg" alt="Valorant" class="w-24 h-24 rounded-lg object-cover">
+                        <div class="flex-1">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <h3 class="font-bold text-white text-lg">Valorant</h3>
+                                    <p class="text-gray-400 text-sm">Tactical shooter, 5v5</p>
+                                    <div class="flex items-center gap-2 mt-2">
+                                        <span class="text-green-400 text-sm font-semibold">Free</span>
+                                    </div>
+                                </div>
+                                <button class="text-red-400 hover:text-red-300 transition remove-item">
+                                    <i class="bi bi-trash3"></i>
+                                </button>
+                            </div>
+                            <div class="flex justify-between items-center mt-3">
+                                <div class="flex items-center gap-2">
+                                    <button class="quantity-btn w-7 h-7 rounded-md bg-gray-800 text-white hover:bg-blue-600 transition">-</button>
+                                    <span class="item-quantity w-8 text-center font-semibold">1</span>
+                                    <button class="quantity-btn w-7 h-7 rounded-md bg-gray-800 text-white hover:bg-blue-600 transition">+</button>
+                                </div>
+                                <span class="item-price font-bold text-white">Free</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 2 - GTA V -->
+                <div class="cart-item bg-gradient-to-r from-gray-900/50 to-gray-950/50 rounded-xl border border-gray-800 p-4">
+                    <div class="flex gap-4">
+                        <img src="image/gtav.jpg" alt="GTA V" class="w-24 h-24 rounded-lg object-cover">
+                        <div class="flex-1">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <h3 class="font-bold text-white text-lg">GTA V</h3>
+                                    <p class="text-gray-400 text-sm">Open world, Action</p>
+                                    <div class="flex items-center gap-2 mt-2">
+                                        <span class="text-orange-400 text-sm font-semibold">$29.99</span>
+                                    </div>
+                                </div>
+                                <button class="text-red-400 hover:text-red-300 transition remove-item">
+                                    <i class="bi bi-trash3"></i>
+                                </button>
+                            </div>
+                            <div class="flex justify-between items-center mt-3">
+                                <div class="flex items-center gap-2">
+                                    <button class="quantity-btn w-7 h-7 rounded-md bg-gray-800 text-white hover:bg-blue-600 transition">-</button>
+                                    <span class="item-quantity w-8 text-center font-semibold">1</span>
+                                    <button class="quantity-btn w-7 h-7 rounded-md bg-gray-800 text-white hover:bg-blue-600 transition">+</button>
+                                </div>
+                                <span class="item-price font-bold text-white">$29.99</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 3 - Minecraft -->
+                <div class="cart-item bg-gradient-to-r from-gray-900/50 to-gray-950/50 rounded-xl border border-gray-800 p-4">
+                    <div class="flex gap-4">
+                        <img src="image/minecraft.jpg" alt="Minecraft" class="w-24 h-24 rounded-lg object-cover">
+                        <div class="flex-1">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <h3 class="font-bold text-white text-lg">Minecraft</h3>
+                                    <p class="text-gray-400 text-sm">Sandbox, Survival</p>
+                                    <div class="flex items-center gap-2 mt-2">
+                                        <span class="text-orange-400 text-sm font-semibold">$26.99</span>
+                                    </div>
+                                </div>
+                                <button class="text-red-400 hover:text-red-300 transition remove-item">
+                                    <i class="bi bi-trash3"></i>
+                                </button>
+                            </div>
+                            <div class="flex justify-between items-center mt-3">
+                                <div class="flex items-center gap-2">
+                                    <button class="quantity-btn w-7 h-7 rounded-md bg-gray-800 text-white hover:bg-blue-600 transition">-</button>
+                                    <span class="item-quantity w-8 text-center font-semibold">2</span>
+                                    <button class="quantity-btn w-7 h-7 rounded-md bg-gray-800 text-white hover:bg-blue-600 transition">+</button>
+                                </div>
+                                <span class="item-price font-bold text-white">$53.98</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kosong - akan muncul jika cart kosong -->
+                <div id="empty-cart-message" class="hidden text-center py-12 bg-gray-900/30 rounded-xl border border-gray-800">
+                    <i class="bi bi-cart-x text-6xl text-gray-600 mb-4"></i>
+                    <p class="text-gray-400 text-lg">Your cart is empty</p>
+                    <a href="games.html" class="inline-block mt-4 px-6 py-2 bg-blue-600 hover:bg-blue-500 rounded-lg transition">
+                        Browse Games
+                    </a>
+                </div>
+            </div>
+
+            <!-- Order Summary -->
+            <div class="lg:col-span-1">
+                <div class="bg-gradient-to-b from-gray-900 to-gray-950 rounded-xl border border-gray-800 p-6 sticky top-24">
+                    <h3 class="text-xl font-bold text-white mb-4">Order Summary</h3>
+                    
+                    <div class="space-y-3 border-b border-gray-800 pb-4">
+                        <div class="flex justify-between text-gray-400">
+                            <span>Subtotal</span>
+                            <span id="subtotal">$83.97</span>
+                        </div>
+                        <div class="flex justify-between text-gray-400">
+                            <span>Discount</span>
+                            <span class="text-green-400">-$0.00</span>
+                        </div>
+                        <div class="flex justify-between text-gray-400">
+                            <span>Tax (10%)</span>
+                            <span id="tax">$8.40</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between mt-4 pb-4 border-b border-gray-800">
+                        <span class="text-white font-bold text-lg">Total</span>
+                        <span class="text-blue-400 font-bold text-xl" id="total">$92.37</span>
+                    </div>
+                    
+                    <div class="mt-6 space-y-3">
+                        <div class="relative">
+                            <input type="text" placeholder="Promo Code" class="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-blue-500">
+                            <button class="absolute right-2 top-1/2 -translate-y-1/2 text-blue-400 text-sm font-semibold hover:text-blue-300">Apply</button>
+                        </div>
+                        
+                        <button class="w-full btn-epic px-6 py-3 rounded-xl font-bold text-white shadow-xl flex items-center justify-center gap-2 checkout-btn">
+                            <i class="bi bi-credit-card"></i> Proceed to Checkout
+                        </button>
+                        
+                        <button class="w-full btn-outline-epic px-6 py-3 rounded-xl font-semibold text-white flex items-center justify-center gap-2">
+                            <i class="bi bi-arrow-left"></i> <a href="games.html">Continue Shopping</a>
+                        </button>
+                    </div>
+                    
+                    <div class="mt-6 pt-4 border-t border-gray-800">
+                        <p class="text-xs text-gray-500 text-center">
+                            <i class="bi bi-shield-check"></i> Secure payment guaranteed
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recommended Section -->
+    <section class="py-12 px-4 max-w-7xl mx-auto border-t border-white/10">
+        <div class="text-center mb-8">
+            <h2 class="text-2xl md:text-3xl font-bold text-white mb-2">✨ YOU MAY ALSO LIKE</h2>
+            <p class="text-gray-400">Complete your gaming collection</p>
+        </div>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Card Fortnite -->
+            <div class="group bg-gradient-to-b from-gray-900 to-gray-950 rounded-xl overflow-hidden border border-gray-800 hover:border-blue-500/50 transition-all duration-300">
+                <img src="image/fortnite.jpg" alt="Fortnite" class="w-full h-40 object-cover">
+                <div class="p-4">
+                    <h3 class="font-bold text-white">Fortnite</h3>
+                    <p class="text-green-400 text-sm font-semibold mt-1">Free</p>
+                    <button class="w-full mt-3 px-4 py-2 bg-blue-600 hover:bg-blue-500 rounded-lg text-white text-sm font-medium transition add-to-cart-recommended">
+                        <i class="bi bi-cart-plus mr-1"></i> Add to Cart
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Card 2 -->
+            <div class="group bg-gradient-to-b from-gray-900 to-gray-950 rounded-xl overflow-hidden border border-gray-800 hover:border-blue-500/50 transition-all duration-300">
+                <img src="image/valorant.jpg" alt="Valorant" class="w-full h-40 object-cover">
+                <div class="p-4">
+                    <h3 class="font-bold text-white">Valorant</h3>
+                    <p class="text-green-400 text-sm font-semibold mt-1">Free</p>
+                    <button class="w-full mt-3 px-4 py-2 bg-blue-600 hover:bg-blue-500 rounded-lg text-white text-sm font-medium transition add-to-cart-recommended">
+                        <i class="bi bi-cart-plus mr-1"></i> Add to Cart
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="border-t border-white/10 bg-black/40 pt-12 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-8">
+                <div class="col-span-2">
+                    <div class="flex items-center gap-2">
+                        <img src="image/LOGO.png" alt="D'GAMES" class="h-8 w-auto"/>
+                    </div>
+                    <p class="text-gray-400 text-sm mt-3">The ultimate destination for PC & console gamers. Next-level entertainment.</p>
+                    <div class="flex gap-4 mt-5">
+                        <i class="bi bi-twitter-x text-gray-400 hover:text-white text-xl cursor-pointer"></i>
+                        <i class="bi bi-discord text-gray-400 hover:text-white text-xl cursor-pointer"></i>
+                        <a href="https://www.instagram.com/denn_2307/">
+                            <i class="bi bi-instagram text-gray-400 hover:text-white text-xl cursor-pointer"></i>
+                        </a>
+                        <i class="bi bi-youtube text-gray-400 hover:text-white text-xl cursor-pointer"></i>
+                    </div>
+                </div>
+                <div><h4 class="font-bold text-white">Discover</h4><ul class="mt-3 space-y-2 text-gray-400 text-sm"><li>Browse Store</li><li>Free Games</li><li>DENZ Originals</li><li>Coming Soon</li></ul></div>
+                <div><h4 class="font-bold text-white">Support</h4><ul class="mt-3 space-y-2 text-gray-400 text-sm"><li>Help Center</li><li>Refund Policy</li><li>Account</li><li>Parental Guide</li></ul></div>
+                <div><h4 class="font-bold text-white">Legal</h4><ul class="mt-3 space-y-2 text-gray-400 text-sm"><li>Terms of Service</li><li>Privacy Policy</li><li>Store Agreement</li><li>Cookies Settings</li></ul></div>
+            </div>
+            <div class="border-t border-white/5 mt-10 pt-6 text-center text-gray-500 text-xs">
+                © 2026 D'GAMES — Built for gamers, supported by Denis Ganteng.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    const CART_STORAGE_KEY = 'shopping_cart';
+
+    function getCart() {
+        const stored = localStorage.getItem(CART_STORAGE_KEY);
+        return stored ? JSON.parse(stored) : [];
+    }
+
+    function saveCart(cart) {
+        localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
+        renderCart();
+        updateCartBadge();
+    }
+
+    function updateCartBadge() {
+        const cart = getCart();
+        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+        const badge = document.querySelector('.cart-badge');
+        if (badge) {
+            badge.textContent = totalItems;
+            badge.style.display = totalItems > 0 ? 'flex' : 'none';
+        }
+    }
+
+    function showToast(message) {
+        const toast = document.createElement('div');
+        toast.textContent = message;
+        toast.style.cssText = `
+            position: fixed; bottom: 20px; right: 20px;
+            background: #1f2937; color: white; padding: 10px 20px;
+            border-radius: 12px; border-left: 4px solid #3b82f6;
+            z-index: 9999; animation: slideInRight 0.3s ease;
+        `;
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 2000);
+    }
+
+    function renderCart() {
+        const cart = getCart();
+        const container = document.querySelector('.lg\\:col-span-2 .space-y-4');
+        const emptyMsg = document.getElementById('empty-cart-message');
+
+        if (!container) return;
+
+        if (cart.length === 0) {
+            container.innerHTML = '';
+            if (emptyMsg) emptyMsg.classList.remove('hidden');
+            document.getElementById('subtotal').textContent = '$0.00';
+            document.getElementById('tax').textContent = '$0.00';
+            document.getElementById('total').textContent = '$0.00';
+            updateCartBadge();
+            return;
+        }
+
+        if (emptyMsg) emptyMsg.classList.add('hidden');
+
+        let subtotal = 0;
+        let html = '';
+        cart.forEach(item => {
+            const totalItemPrice = item.price * item.quantity;
+            subtotal += totalItemPrice;
+            html += `
+                <div class="cart-item bg-gradient-to-r from-gray-900/50 to-gray-950/50 rounded-xl border border-gray-800 p-4" data-id="${item.id}">
+                    <div class="flex gap-4">
+                        <img src="${item.image}" alt="${item.name}" class="w-24 h-24 rounded-lg object-cover">
+                        <div class="flex-1">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <h3 class="font-bold text-white text-lg">${item.name}</h3>
+                                    <p class="text-gray-400 text-sm">${item.price === 0 ? 'Free' : 'Paid'}</p>
+                                    <div class="flex items-center gap-2 mt-2">
+                                        <span class="${item.price === 0 ? 'text-green-400' : 'text-orange-400'} text-sm font-semibold">
+                                            ${item.price === 0 ? 'Free' : '$' + item.price.toFixed(2)}
+                                        </span>
+                                    </div>
+                                </div>
+                                <button class="remove-item-btn text-red-400 hover:text-red-300 transition" data-id="${item.id}">
+                                    <i class="bi bi-trash3"></i>
+                                </button>
+                            </div>
+                            <div class="flex justify-between items-center mt-3">
+                                <div class="flex items-center gap-2">
+                                    <button class="qty-minus w-7 h-7 rounded-md bg-gray-800 text-white hover:bg-blue-600 transition" data-id="${item.id}">-</button>
+                                    <span class="item-qty w-8 text-center font-semibold">${item.quantity}</span>
+                                    <button class="qty-plus w-7 h-7 rounded-md bg-gray-800 text-white hover:bg-blue-600 transition" data-id="${item.id}">+</button>
+                                </div>
+                                <span class="item-total-price font-bold text-white">${item.price === 0 ? 'Free' : '$' + totalItemPrice.toFixed(2)}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+        container.innerHTML = html;
+
+        const tax = subtotal * 0.1;
+        const total = subtotal + tax;
+        document.getElementById('subtotal').textContent = '$' + subtotal.toFixed(2);
+        document.getElementById('tax').textContent = '$' + tax.toFixed(2);
+        document.getElementById('total').textContent = '$' + total.toFixed(2);
+
+        // Event untuk tombol +, -, hapus
+        document.querySelectorAll('.qty-minus').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const id = btn.getAttribute('data-id');
+                let cart = getCart();
+                const item = cart.find(i => i.id === id);
+                if (item && item.quantity > 1) {
+                    item.quantity--;
+                    saveCart(cart);
+                    showToast('📦 Quantity updated');
+                } else if (item && item.quantity === 1) {
+                    const newCart = cart.filter(i => i.id !== id);
+                    saveCart(newCart);
+                    showToast(`🗑️ ${item.name} removed`);
+                }
+            });
+        });
+
+        document.querySelectorAll('.qty-plus').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const id = btn.getAttribute('data-id');
+                let cart = getCart();
+                const item = cart.find(i => i.id === id);
+                if (item) {
+                    item.quantity++;
+                    saveCart(cart);
+                    showToast('📦 Quantity updated');
+                }
+            });
+        });
+
+        document.querySelectorAll('.remove-item-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const id = btn.getAttribute('data-id');
+                let cart = getCart();
+                const removed = cart.find(i => i.id === id);
+                cart = cart.filter(i => i.id !== id);
+                saveCart(cart);
+                if (removed) showToast(`🗑️ ${removed.name} removed`);
+            });
+        });
+    }
+
+    // Checkout
+    document.querySelector('.checkout-btn')?.addEventListener('click', () => {
+        const cart = getCart();
+        if (cart.length === 0) {
+            showToast('⚠️ Your cart is empty!');
+        } else {
+            showToast('🎉 Proceeding to checkout...');
+            setTimeout(() => {
+                alert('Thank you for your purchase! 🎮');
+                localStorage.removeItem(CART_STORAGE_KEY);
+                renderCart();
+                updateCartBadge();
+            }, 1000);
+        }
+    });
+
+    // Inisialisasi
+    document.addEventListener('DOMContentLoaded', () => {
+        renderCart();
+        updateCartBadge();
+    });
+    </script>
+    <script src="cart.js"></script>
+    <script>
+    (function(){
+        var btn = document.getElementById('mobile-menu-button');
+        var menu = document.getElementById('mobile-nav-links');
+        if(btn && menu){ btn.addEventListener('click', function(){ menu.classList.toggle('hidden'); }); }
+    })();
+    </script>
+</body>
+</html>
