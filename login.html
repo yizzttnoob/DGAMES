@@ -1,3 +1,4 @@
+<!-- login.html - DIPERBAIKI DENGAN MENU YANG LENGKAP -->
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -149,6 +150,32 @@
             background: #00d26a;
             box-shadow: 0 0 6px rgba(0,210,106,0.5);
         }
+        /* Avatar Profile Bulat */
+        .avatar-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            color: white;
+        }
+        .avatar-circle-large {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 42px;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            color: white;
+            margin: 0 auto;
+        }
 </style>
 </head>
 <body class="bg-[#121417] text-gray-200 font-inter">
@@ -173,6 +200,9 @@
                 
                 <!-- Right section: Actions (Search, Notif, Cart, Login) -->
                 <div class="flex items-center gap-3">
+                    <button id="searchBtn" class="p-2 rounded-full text-gray-300 hover:bg-white/10 transition" aria-label="Search">
+                        <i class="bi bi-search text-xl"></i>
+                    </button>
                     <button id="notifBtn" class="p-2 rounded-full text-gray-300 hover:bg-white/10 transition relative" aria-label="Notifications">
                         <i class="bi bi-bell text-xl"></i>
                         <span id="notifDot" class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full ring-2 ring-black"></span>
@@ -257,6 +287,7 @@
                                     <i class="bi bi-envelope absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"></i>
                                     <input type="email" id="loginEmail" class="login-input-field pl-11" placeholder="gamer@dgames.com" required>
                                 </div>
+                                <div id="emailError" class="text-red-400 text-xs mt-1 hidden"></div>
                             </div>
                             <div class="mb-5">
                                 <label class="block text-gray-300 text-sm font-medium mb-1.5">Password</label>
@@ -267,12 +298,13 @@
                                         <i class="bi bi-eye-slash" id="toggleIcon"></i>
                                     </button>
                                 </div>
+                                <div id="passwordError" class="text-red-400 text-xs mt-1 hidden"></div>
                             </div>
                             <div class="flex items-center justify-between mb-6">
                                 <label class="flex items-center gap-2 text-sm text-gray-400">
-                                    <input type="checkbox" class="rounded bg-gray-800 border-gray-600 focus:ring-blue-500"> Remember me
+                                    <input type="checkbox" id="rememberMe" class="rounded bg-gray-800 border-gray-600 focus:ring-blue-500"> Remember me
                                 </label>
-                                <a href="#" class="text-sm text-blue-400 hover:underline transition">Forgot password?</a>
+                                <a href="#" id="forgotPasswordLink" class="text-sm text-blue-400 hover:underline transition">Forgot password?</a>
                             </div>
                             <button type="submit" class="login-gradient-btn mb-5 flex items-center justify-center gap-2">
                                 <i class="bi bi-box-arrow-in-right"></i> Sign In
@@ -337,10 +369,9 @@
         <span id="toastText">Login berhasil!</span>
     </div>
 
+    <script src="auth.js"></script>
     <script>
-        // ========== JAVASCRIPT UNTUK LOGIN (MENGATASI FORM, TOGGLE PASSWORD, SOSIAL MEDIA, TIDAK ADA PROFILE ASLI) =========
-        // Halaman login murni, tidak ada dropdown profile.
-        
+        // ========== JAVASCRIPT UNTUK LOGIN =========
         const toastBox = document.getElementById('toastMsg');
         const toastTextSpan = document.getElementById('toastText');
         
@@ -359,46 +390,10 @@
             }, 3000);
         }
         
-        // Form Login handling
-        const loginForm = document.getElementById('loginFormMain');
-        const emailInput = document.getElementById('loginEmail');
-        const passwordInput = document.getElementById('loginPassword');
-        
-        if(loginForm) {
-            loginForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const email = emailInput.value.trim();
-                const password = passwordInput.value.trim();
-                
-                if(!email || !password) {
-                    showNotif(' Your email address and password are required!', true);
-                    return;
-                }
-                if(!email.includes('@') || !email.includes('.')) {
-                    showNotif(' Please enter a valid email address (e.g., name@domain.com)', true);
-                    return;
-                }
-                if(password.length < 4) {
-                    showNotif(' Password must be at least 4 characters long', true);
-                    return;
-                }
-                
-                // Simulasi sukses login
-                showNotif(` Welcome, ${email.split('@')[0]}! Login successful.`, false);
-                // Reset form opsional
-                emailInput.value = '';
-                passwordInput.value = '';
-                // bisa redirect setelah login? tidak merusak struktur, tapi biarkan sebagai simulasi.
-                setTimeout(() => {
-                    // pindah ke halaman utama misalnya? (kalau diinginkan, abaikan)
-                    // showNotif('Mengarahkan ke dashboard...', false);
-                }, 800);
-            });
-        }
-        
         // Toggle Password Visibility
         const toggleBtn = document.getElementById('togglePasswordBtn');
         const toggleIcon = document.getElementById('toggleIcon');
+        const passwordInput = document.getElementById('loginPassword');
         if(toggleBtn && passwordInput) {
             toggleBtn.addEventListener('click', () => {
                 const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
@@ -408,107 +403,46 @@
             });
         }
         
-        // Sosial login demo
-        const googleBtn = document.getElementById('googleLoginBtn');
-        const githubBtn = document.getElementById('githubLoginBtn');
-        const discordBtn = document.getElementById('discordLoginBtn');
-        
-        if(googleBtn) googleBtn.addEventListener('click', () => showNotif(' Google Authentication (demo) — coming soon', false));
-        if(githubBtn) githubBtn.addEventListener('click', () => showNotif(' GitHub login simulation, stay tuned for integration', false));
-        if(discordBtn) discordBtn.addEventListener('click', () => showNotif(' Discord login will be integrated with the community', false));
-        
-        // Register redirect
-        const registerBtn = document.getElementById('registerRedirectBtn');
-        if(registerBtn) {
-            registerBtn.addEventListener('click', () => {
-                window.location.href = 'register.html';
-            });
-        }
-        
-        // Forgot password
-        const forgotLinks = document.querySelectorAll('a[href="#"]');
-        forgotLinks.forEach(link => {
-            if(link.innerText.includes('Forgot') || link.innerText.includes('Lupa') || link.innerText.toLowerCase().includes('forgot')) {
-                link.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    showNotif(' Password reset instructions will be sent to your registered email address.', false);
-                });
-            }
+        document.getElementById('forgotPasswordLink')?.addEventListener('click', (e) => {
+            e.preventDefault();
+            showNotif('📧 Password reset instructions will be sent to your email address.', false);
         });
         
-        // Mobile menu toggle (asli tetap berfungsi)
+        document.getElementById('googleLoginBtn')?.addEventListener('click', () => showNotif('🔐 Google Login coming soon!', false));
+        document.getElementById('discordLoginBtn')?.addEventListener('click', () => showNotif('🎮 Discord Login coming soon!', false));
+        
+        document.getElementById('registerRedirectBtn')?.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.location.href = 'register.html';
+        });
+        
+        // Mobile menu toggle
         const mobileMenuBtn = document.getElementById('mobile-menu-button');
         const mobileNavLinks = document.getElementById('mobile-nav-links');
         if(mobileMenuBtn && mobileNavLinks) {
             mobileMenuBtn.addEventListener('click', () => {
                 mobileNavLinks.classList.toggle('hidden');
+                const icon = mobileMenuBtn.querySelector('i');
+                if(icon) icon.classList.toggle('bi-list', mobileNavLinks.classList.contains('hidden'));
+                if(icon) icon.classList.toggle('bi-x-lg', !mobileNavLinks.classList.contains('hidden'));
             });
         }
         
-        // small effect for extra smoothness: tidak ada profile section lagi, sehingga tak ada konflik
-        console.log('Active login page — the profile has been completely removed and replaced with a login card.');
-        // Ambil elemen tombol dan menu mobile
-const menuButton = document.getElementById('mobile-menu-button');
-const mobileMenu = document.getElementById('mobile-nav-links');
-
-// Fungsi toggle menu
-function toggleMobileMenu() {
-    if (mobileMenu.classList.contains('hidden')) {
-        mobileMenu.classList.remove('hidden');
-        // Ganti icon menjadi X saat menu terbuka
-        const icon = menuButton.querySelector('i');
-        if (icon) {
-            icon.classList.remove('bi-list');
-            icon.classList.add('bi-x-lg');
-        }
-    } else {
-        mobileMenu.classList.add('hidden');
-        // Kembalikan icon hamburger
-        const icon = menuButton.querySelector('i');
-        if (icon) {
-            icon.classList.remove('bi-x-lg');
-            icon.classList.add('bi-list');
-        }
-    }
-}
-
-// Event listener klik tombol
-if (menuButton) {
-    menuButton.addEventListener('click', toggleMobileMenu);
-}
-
-// Saat layar diubah ke ukuran desktop, tutup menu otomatis
-function handleResize() {
-    if (window.innerWidth >= 768) {
-        if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
-            mobileMenu.classList.add('hidden');
-            const icon = menuButton?.querySelector('i');
-            if (icon) {
-                icon.classList.remove('bi-x-lg');
-                icon.classList.add('bi-list');
+        window.addEventListener('resize', () => {
+            if(window.innerWidth >= 768 && mobileNavLinks && !mobileNavLinks.classList.contains('hidden')) {
+                mobileNavLinks.classList.add('hidden');
+                const icon = mobileMenuBtn?.querySelector('i');
+                if(icon) icon.classList.add('bi-list');
+                if(icon) icon.classList.remove('bi-x-lg');
             }
-        }
-    }
-}
-
-window.addEventListener('resize', handleResize);
-handleResize();
-
-// Klik di luar menu untuk menutup
-document.addEventListener('click', function(event) {
-    if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
-        const isClickInsideMenu = mobileMenu.contains(event.target);
-        const isClickOnButton = menuButton && menuButton.contains(event.target);
-        if (!isClickInsideMenu && !isClickOnButton) {
-            mobileMenu.classList.add('hidden');
-            const icon = menuButton?.querySelector('i');
-            if (icon) {
-                icon.classList.remove('bi-x-lg');
-                icon.classList.add('bi-list');
+        });
+        
+        // Initialize auth system
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof initAuthSystem === 'function') {
+                initAuthSystem();
             }
-        }
-    }
-});
+        });
     </script>
     <script src="cart.js"></script>
 </body>

@@ -1,3 +1,4 @@
+<!-- action.html - DIPERBARUI DENGAN SISTEM LOGIN -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,7 +22,6 @@
             background-clip: text;
             color: transparent;
         }
-        /* custom scrollbar */
         ::-webkit-scrollbar {
             width: 6px;
             height: 6px;
@@ -36,7 +36,6 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #0078f0;
         }
-        /* Notif & Search Animations */
         @keyframes slideDown {
             from { opacity: 0; transform: translateY(-20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -61,6 +60,103 @@
             0% { transform: scale(1); }
             50% { transform: scale(1.3); }
             100% { transform: scale(1); }
+        }
+
+        /* Modal Popup Sukses Tambah Keranjang */
+        .cart-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(12px);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        .cart-modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .cart-modal {
+            background: linear-gradient(145deg, #1a1e2a, #0f1119);
+            max-width: 480px;
+            width: 90%;
+            border-radius: 2rem;
+            border: 1px solid rgba(0, 120, 240, 0.4);
+            box-shadow: 0 25px 45px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,120,240,0.2);
+            transform: scale(0.9);
+            transition: transform 0.3s cubic-bezier(0.34, 1.2, 0.64, 1);
+            padding: 1.8rem;
+            text-align: center;
+        }
+        .cart-modal-overlay.active .cart-modal {
+            transform: scale(1);
+        }
+        .cart-modal-icon {
+            font-size: 4rem;
+            background: linear-gradient(135deg, #00e676, #00b248);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+            margin-bottom: 0.75rem;
+        }
+        .cart-modal h2 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.75rem;
+        }
+        .cart-modal p {
+            color: #cbd5e1;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+        .cart-modal .game-name-highlight {
+            font-weight: 700;
+            color: #3b82f6;
+            background: rgba(59,130,246,0.2);
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            margin: 0 0.2rem;
+        }
+        .modal-close-btn {
+            background: linear-gradient(95deg, #0078f0 0%, #00b2ff 100%);
+            border: none;
+            padding: 0.75rem 1.8rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            transition: all 0.2s;
+            margin-top: 0.5rem;
+            cursor: pointer;
+        }
+        .modal-close-btn:hover {
+            transform: scale(0.96);
+            filter: brightness(1.05);
+        }
+        
+        /* Style untuk avatar profile */
+        .profile-avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 12px;
         }
     </style>
 </head>
@@ -109,11 +205,25 @@
         </div>
     </div>
 
-    <!-- NAVBAR (Identik dengan denis.html) -->
+    <!-- MODAL TENGAH UNTUK POPUP BUY/GET -->
+    <div id="cartSuccessModal" class="cart-modal-overlay">
+        <div class="cart-modal">
+            <div class="cart-modal-icon">
+                <i class="bi bi-check-circle-fill"></i>
+            </div>
+            <h2>ADDED TO CART!</h2>
+            <p><span id="modalGameName" class="game-name-highlight">Game</span> has been added to your shopping cart.</p>
+            <div class="flex gap-3 justify-center mt-2">
+                <button class="modal-continue-btn px-4 py-2 bg-white/10 rounded-xl text-white font-medium hover:bg-white/20 transition">Continue Shopping</button>
+                <button class="modal-view-cart-btn px-4 py-2 bg-blue-600 rounded-xl text-white font-medium hover:bg-blue-500 transition">View Cart</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- NAVBAR -->
     <nav class="sticky top-0 z-50 bg-black/95 backdrop-blur-md border-b border-white/10 shadow-xl">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
-                <!-- Left section: Logo + Navigation Menu -->
                 <div class="flex items-center gap-6">
                     <a href="index.html" class="shrink-0">
                         <img src="image/LOGO.png" alt="D'GAMES" class="h-8 w-auto">
@@ -127,7 +237,6 @@
                     </div>
                 </div>
                 
-                <!-- Right section: Search, Notif, Cart, Login -->
                 <div class="flex items-center gap-3">
                     <button id="searchBtn" class="p-2 rounded-full text-gray-300 hover:bg-white/10 transition" aria-label="Search">
                         <i class="bi bi-search text-xl"></i>
@@ -147,7 +256,6 @@
             </div>
         </div>
         
-        <!-- Mobile Menu -->
         <div class="md:hidden px-4 pb-2">
             <button id="mobile-menu-button" class="text-gray-300 hover:text-white focus:outline-none">
                 <i class="bi bi-list text-2xl"></i>
@@ -181,7 +289,7 @@
         <!-- Games Grid -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="gamesContainer">
             <!-- Card 1 - Spider-Man 2 -->
-            <div class="group bg-gradient-to-b from-gray-900 to-gray-950 rounded-xl overflow-hidden border border-gray-800 hover:border-blue-500/50 transition-all duration-300 hover:transform hover:-translate-y-2" data-name="Spider-Man 2" data-genre="Action">
+            <div class="group bg-gradient-to-b from-gray-900 to-gray-950 rounded-xl overflow-hidden border border-gray-800 hover:border-blue-500/50 transition-all duration-300 hover:transform hover:-translate-y-2" data-name="Spider-Man 2" data-genre="Action" data-price="49.99" data-is-free="false">
                 <div class="relative overflow-hidden">
                     <img src="image/spiderman2.jpg" alt="Spider-Man" class="w-full h-48 object-cover group-hover:scale-110 transition duration-300">
                     <div class="absolute top-3 right-3 bg-black/70 backdrop-blur-sm px-2 py-1 rounded-lg text-xs font-semibold text-yellow-400">
@@ -201,7 +309,7 @@
             </div>
             
             <!-- Card 2 - God of War Ragnarök -->
-            <div class="group bg-gradient-to-b from-gray-900 to-gray-950 rounded-xl overflow-hidden border border-gray-800 hover:border-blue-500/50 transition-all duration-300 hover:transform hover:-translate-y-2" data-name="God of War Ragnarök" data-genre="Action">
+            <div class="group bg-gradient-to-b from-gray-900 to-gray-950 rounded-xl overflow-hidden border border-gray-800 hover:border-blue-500/50 transition-all duration-300 hover:transform hover:-translate-y-2" data-name="God of War Ragnarök" data-genre="Action" data-price="50.99" data-is-free="false">
                 <div class="relative overflow-hidden">
                     <img src="image/gowr.jpg" alt="God of War" class="w-full h-48 object-cover group-hover:scale-110 transition duration-300">
                     <div class="absolute top-3 right-3 bg-black/70 backdrop-blur-sm px-2 py-1 rounded-lg text-xs font-semibold text-yellow-400">
@@ -221,7 +329,7 @@
             </div>
 
             <!-- Card 3 - GTA V -->
-            <div class="group bg-gradient-to-b from-gray-900 to-gray-950 rounded-xl overflow-hidden border border-gray-800 hover:border-blue-500/50 transition-all duration-300 hover:transform hover:-translate-y-2" data-name="GTA V" data-genre="Action">
+            <div class="group bg-gradient-to-b from-gray-900 to-gray-950 rounded-xl overflow-hidden border border-gray-800 hover:border-blue-500/50 transition-all duration-300 hover:transform hover:-translate-y-2" data-name="GTA V" data-genre="Action" data-price="29.99" data-is-free="false">
                 <div class="relative overflow-hidden">
                     <img src="image/gtav.jpg" alt="GTA V" class="w-full h-48 object-cover group-hover:scale-110 transition duration-300">
                     <div class="absolute top-3 right-3 bg-black/70 backdrop-blur-sm px-2 py-1 rounded-lg text-xs font-semibold text-yellow-400">
@@ -241,7 +349,7 @@
             </div>
 
             <!-- Card 4 - Red Dead Redemption 2 -->
-            <div class="group bg-gradient-to-b from-gray-900 to-gray-950 rounded-xl overflow-hidden border border-gray-800 hover:border-blue-500/50 transition-all duration-300 hover:transform hover:-translate-y-2" data-name="Red Dead Redemption 2" data-genre="Action">
+            <div class="group bg-gradient-to-b from-gray-900 to-gray-950 rounded-xl overflow-hidden border border-gray-800 hover:border-blue-500/50 transition-all duration-300 hover:transform hover:-translate-y-2" data-name="Red Dead Redemption 2" data-genre="Action" data-price="59.99" data-is-free="false">
                 <div class="relative overflow-hidden">
                     <img src="image/rdr2.jpg" alt="Red Dead" class="w-full h-48 object-cover group-hover:scale-110 transition duration-300">
                     <div class="absolute top-3 right-3 bg-black/70 backdrop-blur-sm px-2 py-1 rounded-lg text-xs font-semibold text-yellow-400">
@@ -280,9 +388,7 @@
                     <div class="flex gap-4 mt-5">
                         <i class="bi bi-twitter-x text-gray-400 hover:text-white text-xl cursor-pointer"></i>
                         <i class="bi bi-discord text-gray-400 hover:text-white text-xl cursor-pointer"></i>
-                        <a href="https://www.instagram.com/denn_2307/">
-                            <i class="bi bi-instagram text-gray-400 hover:text-white text-xl cursor-pointer"></i>
-                        </a>
+                        <a href="https://www.instagram.com/denn_2307/"><i class="bi bi-instagram text-gray-400 hover:text-white text-xl cursor-pointer"></i></a>
                         <i class="bi bi-youtube text-gray-400 hover:text-white text-xl cursor-pointer"></i>
                     </div>
                 </div>
@@ -296,8 +402,31 @@
         </div>
     </footer>
 
+    <script src="auth.js"></script>
     <script>
-        // Mobile Menu Toggle
+        // POPUP MODAL
+        const cartModal = document.getElementById('cartSuccessModal');
+        const modalGameNameSpan = document.getElementById('modalGameName');
+
+        function showCartModal(gameName) {
+            modalGameNameSpan.textContent = gameName;
+            cartModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeCartModal() {
+            cartModal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        const modalContinueBtn = document.querySelector('.modal-continue-btn');
+        const modalViewCartBtn = document.querySelector('.modal-view-cart-btn');
+        
+        if (modalContinueBtn) modalContinueBtn.addEventListener('click', closeCartModal);
+        if (modalViewCartBtn) modalViewCartBtn.addEventListener('click', () => window.location.href = "cart.html");
+        cartModal.addEventListener('click', (e) => { if (e.target === cartModal) closeCartModal(); });
+
+        // Mobile Menu
         const menuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-nav-links');
 
@@ -305,35 +434,22 @@
             if (mobileMenu.classList.contains('hidden')) {
                 mobileMenu.classList.remove('hidden');
                 const icon = menuButton.querySelector('i');
-                if (icon) {
-                    icon.classList.remove('bi-list');
-                    icon.classList.add('bi-x-lg');
-                }
+                if (icon) { icon.classList.remove('bi-list'); icon.classList.add('bi-x-lg'); }
             } else {
                 mobileMenu.classList.add('hidden');
                 const icon = menuButton.querySelector('i');
-                if (icon) {
-                    icon.classList.remove('bi-x-lg');
-                    icon.classList.add('bi-list');
-                }
+                if (icon) { icon.classList.remove('bi-x-lg'); icon.classList.add('bi-list'); }
             }
         }
-
-        if (menuButton) {
-            menuButton.addEventListener('click', toggleMobileMenu);
-        }
+        if (menuButton) menuButton.addEventListener('click', toggleMobileMenu);
 
         function handleResize() {
             if (window.innerWidth >= 768 && mobileMenu && !mobileMenu.classList.contains('hidden')) {
                 mobileMenu.classList.add('hidden');
                 const icon = menuButton?.querySelector('i');
-                if (icon) {
-                    icon.classList.add('bi-list');
-                    icon.classList.remove('bi-x-lg');
-                }
+                if (icon) { icon.classList.add('bi-list'); icon.classList.remove('bi-x-lg'); }
             }
         }
-
         window.addEventListener('resize', handleResize);
         handleResize();
 
@@ -344,65 +460,33 @@
                 if (!isClickInsideMenu && !isClickOnButton) {
                     mobileMenu.classList.add('hidden');
                     const icon = menuButton?.querySelector('i');
-                    if (icon) {
-                        icon.classList.add('bi-list');
-                        icon.classList.remove('bi-x-lg');
-                    }
+                    if (icon) { icon.classList.add('bi-list'); icon.classList.remove('bi-x-lg'); }
                 }
             }
         });
 
         // Login Button
         const loginBtn = document.getElementById('loginButton');
-        if (loginBtn) {
-            loginBtn.addEventListener('click', function() {
-                window.location.href = "login.html";
-            });
-        }
+        if (loginBtn) loginBtn.addEventListener('click', () => window.location.href = "login.html");
 
-        // ======================== SEARCH MODAL FUNCTIONALITY ========================
+        // SEARCH MODAL
         const searchBtn = document.getElementById('searchBtn');
         const searchModal = document.getElementById('searchModal');
         const closeSearch = document.getElementById('closeSearch');
         const searchInputElem = document.getElementById('searchInput');
         
-        searchBtn?.addEventListener('click', () => { 
-            searchModal.classList.remove('hidden'); 
-            setTimeout(() => searchInputElem?.focus(), 100); 
-        });
+        searchBtn?.addEventListener('click', () => { searchModal.classList.remove('hidden'); setTimeout(() => searchInputElem?.focus(), 100); });
+        closeSearch?.addEventListener('click', () => { searchModal.classList.add('hidden'); if(searchInputElem) searchInputElem.value = ''; });
+        searchModal?.addEventListener('click', (e) => { if(e.target === searchModal) { searchModal.classList.add('hidden'); if(searchInputElem) searchInputElem.value = ''; } });
+        document.addEventListener('keydown', (e) => { if(e.key === 'Escape') { searchModal.classList.add('hidden'); if(searchInputElem) searchInputElem.value = ''; } });
         
-        closeSearch?.addEventListener('click', () => { 
-            searchModal.classList.add('hidden'); 
-            if(searchInputElem) searchInputElem.value = ''; 
-        });
-        
-        searchModal?.addEventListener('click', (e) => { 
-            if(e.target === searchModal) { 
-                searchModal.classList.add('hidden'); 
-                if(searchInputElem) searchInputElem.value = ''; 
-            } 
-        });
-        
-        document.addEventListener('keydown', (e) => { 
-            if(e.key === 'Escape') { 
-                searchModal.classList.add('hidden'); 
-                if(searchInputElem) searchInputElem.value = ''; 
-            } 
-        });
-        
-        // Search functionality on games
         if(searchInputElem) {
             searchInputElem.addEventListener('input', function() {
                 const keyword = this.value.toLowerCase().trim();
-                const allGames = document.querySelectorAll('#gamesContainer .group');
-                allGames.forEach(game => {
+                document.querySelectorAll('#gamesContainer .group').forEach(game => {
                     const title = game.querySelector('h3')?.textContent.toLowerCase() || '';
                     const genreElem = game.querySelector('p')?.textContent.toLowerCase() || '';
-                    if(keyword === '' || title.includes(keyword) || genreElem.includes(keyword)) {
-                        game.style.display = '';
-                    } else {
-                        game.style.display = 'none';
-                    }
+                    game.style.display = (keyword === '' || title.includes(keyword) || genreElem.includes(keyword)) ? '' : 'none';
                 });
             });
         }
@@ -417,49 +501,30 @@
             });
         });
 
-        // ======================== NOTIFICATION DROPDOWN FUNCTIONALITY ========================
+        // NOTIFICATION DROPDOWN
         const notifBtn = document.getElementById('notifBtn');
         const notifDropdown = document.getElementById('notifDropdown');
         const notifDot = document.getElementById('notifDot');
         const markAllReadBtn = document.getElementById('markAllRead');
         
-        notifBtn?.addEventListener('click', (e) => { 
-            e.stopPropagation(); 
-            notifDropdown.classList.toggle('hidden'); 
-        });
-        
-        document.addEventListener('click', (e) => { 
-            if(notifDropdown && !notifDropdown.contains(e.target) && e.target !== notifBtn) 
-                notifDropdown.classList.add('hidden'); 
-        });
-        
-        markAllReadBtn?.addEventListener('click', () => { 
-            if(notifDot) notifDot.classList.add('hidden'); 
-            document.querySelectorAll('.notif-item').forEach(item => item.style.opacity = '0.5'); 
-            markAllReadBtn.textContent = 'All read'; 
-            markAllReadBtn.classList.remove('text-blue-400'); 
-            markAllReadBtn.classList.add('text-gray-500'); 
-            markAllReadBtn.style.cursor = 'default'; 
-        });
+        notifBtn?.addEventListener('click', (e) => { e.stopPropagation(); notifDropdown.classList.toggle('hidden'); });
+        document.addEventListener('click', (e) => { if(notifDropdown && !notifDropdown.contains(e.target) && e.target !== notifBtn) notifDropdown.classList.add('hidden'); });
+        markAllReadBtn?.addEventListener('click', () => { if(notifDot) notifDot.classList.add('hidden'); document.querySelectorAll('.notif-item').forEach(item => item.style.opacity = '0.5'); markAllReadBtn.textContent = 'All read'; markAllReadBtn.classList.remove('text-blue-400'); markAllReadBtn.classList.add('text-gray-500'); markAllReadBtn.style.cursor = 'default'; });
 
-        // ======================== CART FUNCTIONALITY ========================
+        // CART FUNCTIONALITY
         let cartCount = 0;
         const cartBadge = document.querySelector('.cart-badge');
         const cartButton = document.querySelector('.cart-button');
         
         function loadCartCount() {
             try {
-                const savedCart = localStorage.getItem('keranjang') || localStorage.getItem('simple_cart');
+                const savedCart = localStorage.getItem('shopping_cart') || localStorage.getItem('keranjang') || localStorage.getItem('simple_cart');
                 if (savedCart) {
                     let cart = JSON.parse(savedCart);
                     if (Array.isArray(cart)) {
-                        cartCount = cart.reduce((total, item) => total + (item.jumlah || 1), 0);
-                    } else {
-                        cartCount = 0;
-                    }
-                } else {
-                    cartCount = 0;
-                }
+                        cartCount = cart.reduce((total, item) => total + (item.quantity || item.jumlah || 1), 0);
+                    } else { cartCount = 0; }
+                } else { cartCount = 0; }
             } catch(e) { cartCount = 0; }
             updateCartBadge();
         }
@@ -472,33 +537,24 @@
             } 
         }
         
-        if(cartButton) {
-            cartButton.addEventListener('click', function() {
-                window.location.href = "cart.html";
-            });
-        }
+        if(cartButton) cartButton.addEventListener('click', () => window.location.href = "cart.html");
         
         function addToCart(gameTitle) { 
-            let cart = JSON.parse(localStorage.getItem('keranjang')) || [];
+            let cart = JSON.parse(localStorage.getItem('shopping_cart') || '[]');
             let found = false;
             for (let i = 0; i < cart.length; i++) {
-                if (cart[i].nama === gameTitle) {
-                    cart[i].jumlah = (cart[i].jumlah || 1) + 1;
+                if (cart[i].name === gameTitle) {
+                    cart[i].quantity = (cart[i].quantity || 1) + 1;
                     found = true;
                     break;
                 }
             }
             if (!found) {
-                cart.push({ nama: gameTitle, harga: 0, gambar: '', jumlah: 1 });
+                cart.push({ name: gameTitle, price: 0, image: '', quantity: 1 });
             }
-            localStorage.setItem('keranjang', JSON.stringify(cart));
+            localStorage.setItem('shopping_cart', JSON.stringify(cart));
             loadCartCount();
-            
-            const toast = document.createElement('div');
-            toast.textContent = `✅ ${gameTitle} added to cart!`;
-            toast.style.cssText = `position:fixed; bottom:20px; right:20px; background:#1f2937; color:white; padding:10px 20px; border-radius:8px; border-left:3px solid #3b82f6; z-index:9999; animation:slideIn 0.3s ease; font-size:14px; font-family:Inter, sans-serif;`;
-            document.body.appendChild(toast);
-            setTimeout(() => toast.remove(), 2000);
+            showCartModal(gameTitle);
         }
         
         document.querySelectorAll('.game-btn').forEach(btn => { 
@@ -513,28 +569,8 @@
         loadCartCount();
         
         window.addEventListener('storage', function(e) {
-            if (e.key === 'keranjang' || e.key === 'simple_cart') {
-                loadCartCount();
-            }
+            if (e.key === 'shopping_cart' || e.key === 'keranjang' || e.key === 'simple_cart') loadCartCount();
         });
-        
-        if (!document.querySelector('#cart-toast-style')) {
-            const style = document.createElement('style');
-            style.id = 'cart-toast-style';
-            style.textContent = `
-                @keyframes slideIn {
-                    from { transform: translateX(100%); opacity: 0; }
-                    to { transform: translateX(0); opacity: 1; }
-                }
-                @keyframes badgePop {
-                    0% { transform: scale(1); }
-                    50% { transform: scale(1.3); }
-                    100% { transform: scale(1); }
-                }
-                .cart-badge.pop { animation: badgePop 0.3s ease; }
-            `;
-            document.head.appendChild(style);
-        }
     </script>
     <script src="cart.js"></script>
 </body>

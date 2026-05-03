@@ -1,9 +1,10 @@
+<!-- register.html - DIPERBAIKI DENGAN AVATAR BULAT DAN MENU LENGKAP -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>D'GAMES | Group 4 - Create Account</title>
+    <title>D'GAMES | Create Account - Kelompok 5</title>
     <!-- tailwind css-->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- bootstrap icons & css -->
@@ -12,7 +13,6 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
 <style>
-    /* ===== MAIN STYLES (SAME AS LOGIN) ===== */
     body {
         background-color: #0a0c10;
         scroll-behavior: smooth;
@@ -61,7 +61,6 @@
         100% { opacity: 0; }
     }
 
-    /* register page styles */
     .register-hero-card {
         background: rgba(15, 18, 25, 0.75);
         backdrop-filter: blur(12px);
@@ -173,32 +172,67 @@
             gap: 8px;
         }
     }
-      ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #1a1c23;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #2f3e4e;
-            border-radius: 8px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #0078f0;
-        }
-        .badge-free {
-            background: #00d26a;
-            box-shadow: 0 0 6px rgba(0,210,106,0.5);
-        }
+    ::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+        background: #1a1c23;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: #2f3e4e;
+        border-radius: 8px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background: #0078f0;
+    }
+    @keyframes slideIn {
+        from { transform: translateX(100%); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+    }
+    .cart-badge {
+        transition: all 0.2s ease;
+    }
+    .cart-badge.pop {
+        animation: badgePop 0.3s ease;
+    }
+    @keyframes badgePop {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.3); }
+        100% { transform: scale(1); }
+    }
+    /* Avatar Profile Bulat */
+    .avatar-circle {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 18px;
+        background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+        color: white;
+    }
+    .avatar-circle-small {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 14px;
+        background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+        color: white;
+    }
 </style>
 </head>
 <body class="bg-[#121417] text-gray-200 font-inter">
-    <!-- NAVBAR - Same as login page -->
+    <!-- NAVBAR - Menu lengkap seperti semula -->
     <nav class="sticky top-0 z-50 bg-black/95 backdrop-blur-md border-b border-white/10 shadow-xl">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
-                <!-- Left section: Logo + Navigation Menu -->
                 <div class="flex items-center gap-6">
                     <a href="index.html" class="shrink-0">
                         <img src="image/LOGO.png" alt="D'GAMES" class="h-8 w-auto">
@@ -211,9 +245,10 @@
                         <a href="community.html" class="px-4 py-2 text-sm font-medium text-gray-300 hover:text-white hover:bg-white/10 rounded-lg transition">Community</a>
                     </div>
                 </div>
-                
-                <!-- Right section: Actions -->
                 <div class="flex items-center gap-3">
+                    <button id="searchBtn" class="p-2 rounded-full text-gray-300 hover:bg-white/10 transition" aria-label="Search">
+                        <i class="bi bi-search text-xl"></i>
+                    </button>
                     <button id="notifBtn" class="p-2 rounded-full text-gray-300 hover:bg-white/10 transition relative" aria-label="Notifications">
                         <i class="bi bi-bell text-xl"></i>
                         <span id="notifDot" class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full ring-2 ring-black"></span>
@@ -228,8 +263,6 @@
                 </div>
             </div>
         </div>
-        
-        <!-- Mobile Menu -->
         <div class="md:hidden px-4 pb-2">
             <button id="mobile-menu-button" class="text-gray-300 hover:text-white focus:outline-none">
                 <i class="bi bi-list text-2xl"></i>
@@ -244,9 +277,8 @@
         </div>
     </nav>
 
-    <!-- Slideshow + Main Register Content -->
+    <!-- Slideshow + Register Content -->
     <div class="relative min-h-[calc(100vh-64px)] flex items-center justify-center overflow-hidden">
-        <!-- Background slideshow -->
         <div class="slide absolute inset-0">
             <div class="slidesatu"></div>
             <div class="slidedua"></div>
@@ -256,10 +288,8 @@
         </div>
         <div class="absolute inset-0 bg-black/70"></div>
         
-        <!-- register content -->
         <div class="relative z-20 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <div class="flex flex-col lg:flex-row gap-12 items-center">
-                <!-- Left side: branding -->
                 <div class="flex-1 text-left space-y-5">
                     <div class="inline-block bg-white/10 backdrop-blur-sm rounded-full px-4 py-1.5 text-sm font-medium text-blue-200 border border-white/20">
                         <i class="bi bi-emoji-sunglasses me-1"></i> Join the community
@@ -277,7 +307,7 @@
                     </div>
                 </div>
 
-                <!-- Register Card Area (fixed, no conflicts, password min 4 chars) -->
+                <!-- Register Card -->
                 <div class="flex-1 max-w-md w-full mx-auto lg:mx-0">
                     <div class="register-hero-card p-6 md:p-8">
                         <div class="text-center mb-6">
@@ -288,33 +318,33 @@
                             <p class="text-gray-400 text-sm mt-1">Fill in your details to start your adventure</p>
                         </div>
 
-                        <form id="registerForm" class="space-y-4">
+                        <form id="registerForm">
                             <!-- Full Name -->
                             <div>
                                 <label class="block text-gray-300 text-sm font-medium mb-1.5">Full Name</label>
                                 <div class="relative">
                                     <i class="bi bi-person absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"></i>
-                                    <input type="text" id="fullName" class="register-input-field pl-11" placeholder="Budi Santoso" autocomplete="name">
+                                    <input type="text" id="fullName" name="fullName" class="register-input-field pl-11" placeholder="Budi Santoso" autocomplete="name" required>
                                 </div>
-                                <div class="text-xs text-red-400 hidden mt-1" id="nameError">Name must be at least 3 characters</div>
+                                <div id="nameError" class="text-red-400 text-xs mt-1 hidden"></div>
                             </div>
 
                             <!-- Email -->
-                            <div>
+                            <div class="mt-4">
                                 <label class="block text-gray-300 text-sm font-medium mb-1.5">Email Address</label>
                                 <div class="relative">
                                     <i class="bi bi-envelope absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"></i>
-                                    <input type="email" id="regEmail" class="register-input-field pl-11" placeholder="gamer@dgames.com" autocomplete="email">
+                                    <input type="email" id="regEmail" name="regEmail" class="register-input-field pl-11" placeholder="gamer@dgames.com" autocomplete="email" required>
                                 </div>
-                                <div class="text-xs text-red-400 hidden mt-1" id="emailError">Invalid email address (e.g., name@domain.com)</div>
+                                <div id="emailError" class="text-red-400 text-xs mt-1 hidden"></div>
                             </div>
 
-                            <!-- Password (min 4 chars, no element collisions) -->
-                            <div>
+                            <!-- Password -->
+                            <div class="mt-4">
                                 <label class="block text-gray-300 text-sm font-medium mb-1.5">Password</label>
                                 <div class="relative">
                                     <i class="bi bi-lock absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"></i>
-                                    <input type="password" id="regPassword" class="register-input-field pl-11" placeholder="Min 4 characters">
+                                    <input type="password" id="regPassword" name="regPassword" class="register-input-field pl-11" placeholder="Min 4 characters" required>
                                     <button type="button" id="toggleRegPassword" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white focus:outline-none">
                                         <i class="bi bi-eye-slash" id="toggleRegIcon"></i>
                                     </button>
@@ -330,16 +360,16 @@
                             </div>
 
                             <!-- Confirm Password -->
-                            <div>
+                            <div class="mt-4">
                                 <label class="block text-gray-300 text-sm font-medium mb-1.5">Confirm Password</label>
                                 <div class="relative">
                                     <i class="bi bi-shield-lock absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"></i>
-                                    <input type="password" id="confirmPassword" class="register-input-field pl-11" placeholder="Re-enter your password">
+                                    <input type="password" id="confirmPassword" name="confirmPassword" class="register-input-field pl-11" placeholder="Re-enter your password" required>
                                     <button type="button" id="toggleConfirmPassword" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white focus:outline-none">
                                         <i class="bi bi-eye-slash"></i>
                                     </button>
                                 </div>
-                                <div class="text-xs text-red-400 hidden mt-1" id="matchError">Passwords do not match!</div>
+                                <div id="matchError" class="text-red-400 text-xs mt-1 hidden"></div>
                             </div>
 
                             <!-- Terms and checkbox -->
@@ -383,7 +413,7 @@
         </div>
     </div>
 
-    <!-- footer -->
+    <!-- FOOTER -->
     <footer class="border-t border-white/10 mt-12 bg-black/40 pt-12 pb-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-5 gap-8">
@@ -404,7 +434,7 @@
                 <div><h4 class="font-bold text-white">Legal</h4><ul class="mt-3 space-y-2 text-gray-400 text-sm"><li>Terms of Service</li><li>Privacy Policy</li><li>Store Agreement</li><li>Cookies Settings</li></ul></div>
             </div>
             <div class="border-t border-white/5 mt-10 pt-6 text-center text-gray-500 text-xs">
-                © 2026 D'GAMES — Built for gamers.
+                © 2026 D'GAMES — Built for gamers, supported by Denis Ganteng.
             </div>
         </div>
     </footer>
@@ -415,8 +445,9 @@
         <span id="toastText">Registration successful!</span>
     </div>
 
+    <script src="auth.js"></script>
     <script>
-        // ========== JAVASCRIPT WITH PASSWORD MIN 4 CHARACTERS & FIXED COLLISIONS =========
+        // Toast notification
         const toastBox = document.getElementById('toastMsg');
         const toastTextSpan = document.getElementById('toastText');
         
@@ -456,7 +487,7 @@
         const toggleRegIcon = document.getElementById('toggleRegIcon');
         const toggleConfirmBtn = document.getElementById('toggleConfirmPassword');
         
-        // update password strength & checklist
+        // Update password strength & checklist
         function updatePasswordFeedback() {
             const pwd = regPasswordInput.value;
             const hasMinLength = pwd.length >= 4;
@@ -489,6 +520,7 @@
             const confirm = confirmPasswordInput.value;
             if(confirm.length > 0 && pwd !== confirm) {
                 matchErrorDiv.classList.remove('hidden');
+                matchErrorDiv.textContent = 'Passwords do not match!';
                 return false;
             } else {
                 matchErrorDiv.classList.add('hidden');
@@ -500,6 +532,7 @@
             const name = fullNameInput.value.trim();
             if(name.length > 0 && name.length < 3) {
                 nameErrorDiv.classList.remove('hidden');
+                nameErrorDiv.textContent = 'Name must be at least 3 characters';
                 return false;
             } else {
                 nameErrorDiv.classList.add('hidden');
@@ -512,6 +545,7 @@
             const emailPattern = /^[^\s@]+@([^\s@]+\.)+[^\s@]+$/;
             if(email.length > 0 && !emailPattern.test(email)) {
                 emailErrorDiv.classList.remove('hidden');
+                emailErrorDiv.textContent = 'Invalid email address (e.g., name@domain.com)';
                 return false;
             } else {
                 emailErrorDiv.classList.add('hidden');
@@ -547,7 +581,7 @@
             });
         }
         
-        // handle registration submit (password min 4 characters)
+        // handle registration submit
         const registerForm = document.getElementById('registerForm');
         registerForm.addEventListener('submit', (e) => {
             e.preventDefault();
@@ -583,25 +617,26 @@
             }
             
             if(isValid) {
-                let users = JSON.parse(localStorage.getItem('dgames_users') || '[]');
-                const existing = users.find(u => u.email === email);
-                if(existing) {
-                    showToast('Email already registered! Please login.', true);
-                    return;
+                if (typeof registerUser === 'function') {
+                    const result = registerUser(fullName, email, password);
+                    if (result.success) {
+                        showToast(`Registration successful! Welcome, ${fullName.split(' ')[0]}!`, false);
+                        registerForm.reset();
+                        strengthFill.style.width = '0%';
+                        matchErrorDiv.classList.add('hidden');
+                        nameErrorDiv.classList.add('hidden');
+                        emailErrorDiv.classList.add('hidden');
+                        termsCheckbox.checked = false;
+                        updatePasswordFeedback();
+                        setTimeout(() => {
+                            window.location.href = 'index.html';
+                        }, 1500);
+                    } else {
+                        showToast(result.message, true);
+                    }
+                } else {
+                    showToast('Authentication system not loaded. Please refresh the page.', true);
                 }
-                users.push({ name: fullName, email: email, password: password });
-                localStorage.setItem('dgames_users', JSON.stringify(users));
-                showToast(`Registration successful! Welcome, ${fullName.split(' ')[0]}!`, false);
-                registerForm.reset();
-                strengthFill.style.width = '0%';
-                matchErrorDiv.classList.add('hidden');
-                nameErrorDiv.classList.add('hidden');
-                emailErrorDiv.classList.add('hidden');
-                termsCheckbox.checked = false;
-                updatePasswordFeedback();
-                setTimeout(() => {
-                    window.location.href = 'login.html';
-                }, 1800);
             }
         });
         
@@ -609,13 +644,12 @@
         document.getElementById('googleRegBtn')?.addEventListener('click', () => showToast('Google sign up coming soon', false));
         document.getElementById('discordRegBtn')?.addEventListener('click', () => showToast('Discord sign up coming soon', false));
         
+        // Login redirect
         const loginRedirect = document.getElementById('loginRedirectBtn');
         if(loginRedirect) loginRedirect.addEventListener('click', (e) => {
             e.preventDefault();
             window.location.href = 'login.html';
         });
-        const loginNavBtn = document.getElementById('loginButton');
-        if(loginNavBtn) loginNavBtn.addEventListener('click', () => window.location.href = 'login.html');
         
         // Mobile menu
         const mobileMenuBtn = document.getElementById('mobile-menu-button');
@@ -636,7 +670,13 @@
                 if(icon) icon.classList.remove('bi-x-lg');
             }
         });
-        updatePasswordFeedback();
+        
+        // Initialize auth system
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof initAuthSystem === 'function') {
+                initAuthSystem();
+            }
+        });
     </script>
     <script src="cart.js"></script>
 </body>

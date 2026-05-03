@@ -86,30 +86,57 @@
         ::-webkit-scrollbar-thumb { background: #2f3e4e; border-radius: 8px; }
         ::-webkit-scrollbar-thumb:hover { background: #0078f0; }
         .badge-free { background: #00d26a; box-shadow: 0 0 6px rgba(0,210,106,0.5); }
+
+        .game-card {
+            cursor: pointer;
+        }
+        
+        .profile-avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .profile-avatar-large {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+        }
     </style>
 </head>
 <body class="bg-[#121417] text-gray-300">
-
-  <!-- NAVBAR - Menu di kiri sebelah logo -->
     <nav class="sticky top-0 z-50 bg-black/95 backdrop-blur-md border-b border-white/10 shadow-xl">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <!-- Left section: Logo + Navigation Menu -->
                 <div class="flex items-center gap-6">
-                    <a href="denis.html" class="shrink-0">
+                    <a href="index.html" class="shrink-0">
                         <img src="image/LOGO.png" alt="D'GAMES" class="h-8 w-auto">
                     </a>
-                    <!-- Navigation Menu (Desktop) - Sekarang di kiri sebelah logo -->
+                    <!-- Navigation Menu (Desktop) -->
                     <div class="hidden md:flex items-center space-x-1">
-                        <a href="denis.html" class="px-4 py-2 text-sm font-semibold rounded-lg bg-white/5 text-white">Home</a>
+                        <a href="index.html" class="px-4 py-2 text-sm font-semibold rounded-lg bg-white/5 text-white">Home</a>
                         <a href="games.html" class="px-4 py-2 text-sm font-medium text-gray-300 hover:text-white hover:bg-white/10 rounded-lg transition">Games</a>
                         <a href="promo.html" class="px-4 py-2 text-sm font-medium text-gray-300 hover:text-white hover:bg-white/10 rounded-lg transition">Promo</a>
                         <a href="library.html" class="px-4 py-2 text-sm font-medium text-gray-300 hover:text-white hover:bg-white/10 rounded-lg transition">Library</a>
                         <a href="community.html" class="px-4 py-2 text-sm font-medium text-gray-300 hover:text-white hover:bg-white/10 rounded-lg transition">Community</a>
                     </div>
                 </div>
-                
-                <!-- Right section: Actions (Search, Notif, Cart, Login) -->
                 <div class="flex items-center gap-3">
                     <button id="searchBtn" class="p-2 rounded-full text-gray-300 hover:bg-white/10 transition" aria-label="Search">
                         <i class="bi bi-search text-xl"></i>
@@ -129,13 +156,13 @@
             </div>
         </div>
         
-        <!-- Mobile Menu (tetap sama, tidak berubah) -->
+        <!-- Mobile Menu -->
         <div class="md:hidden px-4 pb-2">
             <button id="mobile-menu-button" class="text-gray-300 hover:text-white focus:outline-none">
                 <i class="bi bi-list text-2xl"></i>
             </button>
             <div id="mobile-nav-links" class="hidden mt-2 pb-3 space-y-1 border-t border-white/10 pt-3">
-                <a href="denis.html" class="block px-3 py-2 rounded-lg bg-white/5 text-white font-medium">Home</a>
+                <a href="index.html" class="block px-3 py-2 rounded-lg bg-white/5 text-white font-medium">Home</a>
                 <a href="games.html" class="block px-3 py-2 rounded-lg text-gray-300 hover:bg-white/10">Games</a>
                 <a href="promo.html" class="block px-3 py-2 rounded-lg text-gray-300 hover:bg-white/10">Promo</a>
                 <a href="library.html" class="block px-3 py-2 rounded-lg text-gray-300 hover:bg-white/10">Library</a>
@@ -178,7 +205,7 @@
             </div>
             <div class="notif-item px-4 py-3 hover:bg-white/5 border-b border-gray-800/60 flex items-start gap-3">
                 <i class="bi bi-tag-fill text-green-400 mt-0.5"></i>
-                <div><p class="text-sm text-gray-200">Summer Sale 2026: up to 75% off</p><p class="text-[10px] text-gray-500">Yesterday</p></div>
+                <div><p class="text-sm text-gray-200">Summer Sale 2026: up to 80% off</p><p class="text-[10px] text-gray-500">Yesterday</p></div>
             </div>
             <div class="notif-item px-4 py-3 hover:bg-white/5 flex items-start gap-3">
                 <i class="bi bi-controller text-cyan-400 mt-0.5"></i>
@@ -187,9 +214,8 @@
         </div>
     </div>
 
-    <!-- HERO SECTION - DIPERBAIKI JARAKNYA (atas saja yang lebih rapat) -->
+    <!-- HERO SECTION -->
     <div class="relative min-h-[calc(100vh-64px)] flex flex-col justify-center overflow-hidden">
-        <!-- Slideshow Background -->
         <div class="slide absolute inset-0">
             <div class="slidesatu"></div>
             <div class="slidedua"></div>
@@ -198,10 +224,8 @@
         </div>
         <div class="absolute inset-0 bg-black/60"></div>
 
-        <!-- Konten Hero dengan margin/padding lebih rapat -->
         <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
             <div class="max-w-2xl">
-                <!-- Badge FREE GAME - margin bawah diperkecil dari mb-5 menjadi mb-3 -->
                 <div class="inline-flex items-center gap-2 bg-white/5 backdrop-blur-sm rounded-full px-4 py-1.5 border border-white/10 mb-3">
                     <span class="relative flex h-2 w-2">
                         <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
@@ -209,32 +233,28 @@
                     </span>
                     <span class="text-xs font-semibold tracking-wide text-gray-300">FREE GAME OF THE WEEK</span>
                 </div>
-                <!-- Title - line height lebih rapat, margin top/bottom dioptimalkan -->
                 <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight bg-gradient-to-r from-white via-blue-100 to-cyan-300 bg-clip-text text-transparent leading-[1.2]">
                     FIND YOUR <br>
                     FAVORITE GAMES <br>
                     NOW!
                 </h1>
-                
-                <!-- Deskripsi - margin top diperkecil dari mt-5 menjadi mt-3 -->
                 <p class="text-gray-300 text-lg md:text-xl mt-3 max-w-xl leading-relaxed text-left">
                     Discover your favorite games with the best collection at unbeatable prices. Explore exciting genres, enjoy special deals, and start your unlimited gaming adventure today!
                 </p>
-                <!-- Tombol - margin top diperkecil dari mt-8 menjadi mt-5 -->
-                 <br>
+                <br>
                 <div class="flex flex-wrap gap-4 mt-5">
-                    <button class="btn-epic px-7 py-3 rounded-xl font-bold text-white shadow-xl flex items-center gap-1">
-                        <a href="login.html"><i class="bi bi-gift-fill"></i> CLAIM FREE GAME</a>
-                    </button>
-                    <button class="btn-outline-epic px-7 py-3 rounded-xl font-semibold text-white flex items-center gap-1">
-                        <a href="games.html"><i class="bi bi-controller"></i> EXPLORE STORE</a>
-                    </button>
+                    <a href="login.html" class="btn-epic px-7 py-3 rounded-xl font-bold text-white shadow-xl flex items-center gap-1 no-underline">
+                        <i class="bi bi-gift-fill"></i> CLAIM FREE GAME
+                    </a>
+                    <a href="games.html" class="btn-outline-epic px-7 py-3 rounded-xl font-semibold text-white flex items-center gap-1 no-underline">
+                        <i class="bi bi-controller"></i> EXPLORE STORE
+                    </a>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- SECTION GAME POPULER - DIKEMBALIKAN SEPERTI SEMULA (tanpa perubahan) -->
+    <!-- SECTION GAME POPULER -->
     <section class="py-16 px-4 max-w-7xl mx-auto">
         <div class="text-center mb-12">
             <h2 class="text-3xl md:text-4xl font-bold text-white mb-3">POPULAR GAMES</h2>
@@ -324,30 +344,29 @@
             </div>
         </div>
 
-        <!-- Tombol Lihat Semua -->
         <div class="text-center mt-12">
-            <button class="px-8 py-3 bg-transparent border border-blue-500 text-blue-400 rounded-xl font-semibold hover:bg-blue-500/10 transition-all duration-300">
-                <a href="games.html">VIEW ALL GAMES <i class="bi bi-arrow-right ml-2"></i></a>
-            </button>
+            <a href="games.html" class="px-8 py-3 bg-transparent border border-blue-500 text-blue-400 rounded-xl font-semibold hover:bg-blue-500/10 transition-all duration-300 inline-block">
+                VIEW ALL GAMES <i class="bi bi-arrow-right ml-2"></i>
+            </a>
         </div>
         
-        <!-- Banner Summer Sale - DIKEMBALIKAN SEPERTI SEMULA -->
+        <!-- Banner Summer Sale -->
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-20 mb-12">
             <div class="relative rounded-3xl overflow-hidden shadow-2xl group">
                 <img src="image/summer.jpeg" class="w-full h-64 md:h-80 object-cover brightness-75" alt="Summer Sale">
                 <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent flex items-center">
                     <div class="p-6 md:p-10 max-w-xl">
                         <span class="bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full">Limited Time</span>
-                        <h3 class="text-3xl md:text-4xl font-black mt-3">Summer Sale 2026</h3>
-                        <p class="text-gray-200 mt-2">The heat of summer, the chill of discounts! Get your favorite games at the best prices.</p>
-                        <button class="mt-5 bg-white text-black font-bold px-6 py-2 rounded-xl hover:bg-gray-200 transition"><a href="promo.html" class="text-decoration-none text-black">Claim Deal</a></button>
+                        <a href="promo.html"><h3 class="text-3xl md:text-4xl font-black mt-3">Summer Sale 2026</h3></a>
+                        <a href="promo.html"><p class="text-gray-200 mt-2">The heat of summer, the chill of discounts! Get your favorite games at the best prices.</p></a>
+                        <a href="promo.html" class="mt-5 bg-white text-black font-bold px-6 py-2 rounded-xl hover:bg-gray-200 transition inline-block no-underline">Claim Deal</a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- FOOTER - DIKEMBALIKAN SEPERTI SEMULA -->
+    <!-- FOOTER -->
     <footer class="border-t border-white/10 mt-12 bg-black/40 pt-12 pb-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-5 gap-8">
@@ -357,12 +376,11 @@
                     </div>
                     <p class="text-gray-400 text-sm mt-3">The ultimate destination for PC & console gamers. Next-level entertainment.</p>
                     <div class="flex gap-4 mt-5">
-                        <i class="bi bi-twitter-x text-gray-400 hover:text-white text-xl cursor-pointer"></i>
-                        <i class="bi bi-discord text-gray-400 hover:text-white text-xl cursor-pointer"></i>
-                        <a href="https://www.instagram.com/denn_2307/">
-                            <i class="bi bi-instagram text-gray-400 hover:text-white text-xl cursor-pointer"></i>
-                        </a>
-                        <i class="bi bi-youtube text-gray-400 hover:text-white text-xl cursor-pointer"></i>
+                        <a href="https://www.x.com"><i class="bi bi-twitter-x text-gray-400 hover:text-white text-xl cursor-pointer"></i></a>
+                        <a href="https://www.facebook.com"><i class="bi bi-facebook text-gray-400 hover:text-white text-xl cursor-pointer"></i></a>
+                        <a href="https://www.discord.com"><i class="bi bi-discord text-gray-400 hover:text-white text-xl cursor-pointer"></i></a>
+                        <a href="https://www.instagram.com"><i class="bi bi-instagram text-gray-400 hover:text-white text-xl cursor-pointer"></i></a>
+                        <a href="https://www.youtube.com"><i class="bi bi-youtube text-gray-400 hover:text-white text-xl cursor-pointer"></i></a>
                     </div>
                 </div>
                 <div><h4 class="font-bold text-white">Discover</h4><ul class="mt-3 space-y-2 text-gray-400 text-sm"><li>Browse Store</li><li>Free Games</li><li>DENZ Originals</li><li>Coming Soon</li></ul></div>
@@ -375,6 +393,7 @@
         </div>
     </footer>
 
+    <script src="auth.js"></script>
     <script>
         // MOBILE MENU TOGGLE
         const menuBtn = document.getElementById('mobile-menu-button');
@@ -393,9 +412,6 @@
         if (menuBtn) menuBtn.addEventListener('click', toggleMob);
         window.addEventListener('resize', () => { if (window.innerWidth >= 768 && mobileNav && !mobileNav.classList.contains('hidden')) { mobileNav.classList.add('hidden'); const icon = menuBtn?.querySelector('i'); if (icon) { icon.classList.remove('bi-x-lg'); icon.classList.add('bi-list'); } } });
         document.addEventListener('click', (e) => { if (mobileNav && !mobileNav.classList.contains('hidden') && !mobileNav.contains(e.target) && menuBtn && !menuBtn.contains(e.target)) { mobileNav.classList.add('hidden'); const icon = menuBtn?.querySelector('i'); if (icon) { icon.classList.remove('bi-x-lg'); icon.classList.add('bi-list'); } } });
-
-        // LOGIN
-        document.getElementById('loginButton')?.addEventListener('click', () => window.location.href = "login.html");
 
         // SEARCH MODAL
         const searchBtn = document.getElementById('searchBtn');
@@ -423,8 +439,61 @@
         const cartBtn = document.querySelector('.cart-button');
         function updateCartBadge() { if(cartBadge) { cartBadge.textContent = cartCount; cartBadge.classList.add('pop'); setTimeout(() => cartBadge.classList.remove('pop'), 300); } }
         if(cartBtn) cartBtn.addEventListener('click', () => window.location.href = "cart.html");
-        function addToCart(gameTitle) { cartCount++; updateCartBadge(); const toast = document.createElement('div'); toast.textContent = `✅ ${gameTitle} ditambahkan ke keranjang!`; toast.style.cssText = `position:fixed; bottom:20px; right:20px; background:#1f2937; color:white; padding:10px 20px; border-radius:8px; border-left:3px solid #3b82f6; z-index:9999; animation:slideIn 0.3s ease; font-size:14px; font-family:Inter, sans-serif;`; document.body.appendChild(toast); setTimeout(() => toast.remove(), 2000); }
-        document.querySelectorAll('.game-btn').forEach(btn => { btn.addEventListener('click', function(e) { e.stopPropagation(); const card = this.closest('.group'); const title = card?.querySelector('h3')?.textContent || 'Game'; addToCart(title); }); });
+        function addToCart(gameTitle) { 
+            cartCount++; 
+            updateCartBadge(); 
+            const toast = document.createElement('div'); 
+            toast.textContent = `✅ ${gameTitle} ditambahkan ke keranjang!`; 
+            toast.style.cssText = `position:fixed; bottom:20px; right:20px; background:#1f2937; color:white; padding:10px 20px; border-radius:8px; border-left:3px solid #3b82f6; z-index:9999; animation:slideIn 0.3s ease; font-size:14px; font-family:Inter, sans-serif;`; 
+            document.body.appendChild(toast); 
+            setTimeout(() => toast.remove(), 2000); 
+        }
+        document.querySelectorAll('.game-btn').forEach(btn => { 
+            btn.addEventListener('click', function(e) { 
+                e.stopPropagation(); 
+                const card = this.closest('.group'); 
+                const title = card?.querySelector('h3')?.textContent || 'Game'; 
+                addToCart(title); 
+            }); 
+        });
+
+        // DATA GAME DETAIL PAGES
+        const gameDetailPages = {
+            'Valorant': 'game-valorant.html',
+            'GTA V': 'game-gtav.html',
+            'Minecraft': 'game-minecraft.html',
+            'Fortnite': 'game-fortnite.html'
+        };
+
+        function handleGameCardClick(event) {
+            if (event.target.closest('.game-btn')) {
+                return;
+            }
+            const gameTitleElement = this.querySelector('h3');
+            if (!gameTitleElement) return;
+            let gameTitle = gameTitleElement.textContent.trim();
+            let targetPage = gameDetailPages[gameTitle];
+            if (!targetPage) {
+                targetPage = `promo.html?game=${encodeURIComponent(gameTitle)}`;
+            }
+            window.location.href = targetPage;
+        }
+
+        function initGameCardClick() {
+            const gameCards = document.querySelectorAll('.group');
+            gameCards.forEach(card => {
+                card.classList.add('game-card');
+                card.addEventListener('click', handleGameCardClick);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            initGameCardClick();
+            // Auth system sudah diinisialisasi di auth.js
+            if (typeof isLoggedIn === 'function') {
+                console.log('Auth system ready, logged in:', isLoggedIn());
+            }
+        });
     </script>
     <script src="cart.js"></script>
 </body>
