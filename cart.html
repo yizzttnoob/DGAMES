@@ -64,13 +64,74 @@
         .cart-container {
             animation: fadeIn 0.5s ease-out;
         }
+        @keyframes slideInRight {
+            from { transform: translateX(100px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes badgePop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+            100% { transform: scale(1); }
+        }
+        .cart-badge.pop {
+            animation: badgePop 0.3s ease;
+        }
+        #promo-code-input:focus {
+            border-color: #F97316;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(249,115,22,0.3);
+        }
+        .remove-promo-btn {
+            transition: all 0.2s ease;
+        }
+        .remove-promo-btn:hover {
+            background: rgba(239, 68, 68, 0.2);
+        }
+        .promo-tag {
+            transition: all 0.2s ease;
+        }
+        .promo-tag:hover {
+            transform: translateY(-2px);
+        }
+        .toast-notify {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: #1e293b;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 12px;
+            border-left: 3px solid #3b82f6;
+            z-index: 9999;
+            font-size: 14px;
+            font-weight: 500;
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.5);
+            backdrop-filter: blur(8px);
+            animation: slideInToast 0.25s ease;
+        }
+        @keyframes slideInToast {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        /* Style untuk avatar profile */
+        .profile-avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 12px;
+        }
     </style>
 </head>
 <body class="bg-[#121417] text-gray-300">
      <nav class="sticky top-0 z-50 bg-black/95 backdrop-blur-md border-b border-white/10 shadow-xl">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
-                <!-- Left section: Logo + Navigation Menu -->
                 <div class="flex items-center gap-6">
                     <a href="index.html" class="shrink-0">
                         <img src="image/LOGO.png" alt="D'GAMES" class="h-8 w-auto">
@@ -84,7 +145,6 @@
                     </div>
                 </div>
                 
-                <!-- Right section: Search, Notif, Cart, Login -->
                 <div class="flex items-center gap-3">
                     <button id="searchBtn" class="p-2 rounded-full text-gray-300 hover:bg-white/10 transition" aria-label="Search">
                         <i class="bi bi-search text-xl"></i>
@@ -104,7 +164,6 @@
             </div>
         </div>
         
-        <!-- Mobile Menu -->
         <div class="md:hidden px-4 pb-2">
             <button id="mobile-menu-button" class="text-gray-300 hover:text-white focus:outline-none">
                 <i class="bi bi-list text-2xl"></i>
@@ -118,11 +177,9 @@
             </div>
         </div>
     </nav>
-    
 
     <!-- Cart Content -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 cart-container">
-        <!-- Header -->
         <div class="mb-8">
             <div class="flex items-center gap-3 mb-2">
                 <i class="bi bi-cart3 text-3xl text-blue-400"></i>
@@ -132,184 +189,80 @@
             <div class="w-20 h-1 bg-blue-500 mt-4 rounded-full"></div>
         </div>
 
-        <!-- Cart Items -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <!-- Cart Items List -->
-            <div class="lg:col-span-2 space-y-4">
-                <!-- Item 1 - Valorant -->
-                <div class="cart-item bg-gradient-to-r from-gray-900/50 to-gray-950/50 rounded-xl border border-gray-800 p-4">
-                    <div class="flex gap-4">
-                        <img src="image/valorant.jpg" alt="Valorant" class="w-24 h-24 rounded-lg object-cover">
-                        <div class="flex-1">
-                            <div class="flex justify-between items-start">
-                                <div>
-                                    <h3 class="font-bold text-white text-lg">Valorant</h3>
-                                    <p class="text-gray-400 text-sm">Tactical shooter, 5v5</p>
-                                    <div class="flex items-center gap-2 mt-2">
-                                        <span class="text-green-400 text-sm font-semibold">Free</span>
-                                    </div>
-                                </div>
-                                <button class="text-red-400 hover:text-red-300 transition remove-item">
-                                    <i class="bi bi-trash3"></i>
-                                </button>
-                            </div>
-                            <div class="flex justify-between items-center mt-3">
-                                <div class="flex items-center gap-2">
-                                    <button class="quantity-btn w-7 h-7 rounded-md bg-gray-800 text-white hover:bg-blue-600 transition">-</button>
-                                    <span class="item-quantity w-8 text-center font-semibold">1</span>
-                                    <button class="quantity-btn w-7 h-7 rounded-md bg-gray-800 text-white hover:bg-blue-600 transition">+</button>
-                                </div>
-                                <span class="item-price font-bold text-white">Free</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Item 2 - GTA V -->
-                <div class="cart-item bg-gradient-to-r from-gray-900/50 to-gray-950/50 rounded-xl border border-gray-800 p-4">
-                    <div class="flex gap-4">
-                        <img src="image/gtav.jpg" alt="GTA V" class="w-24 h-24 rounded-lg object-cover">
-                        <div class="flex-1">
-                            <div class="flex justify-between items-start">
-                                <div>
-                                    <h3 class="font-bold text-white text-lg">GTA V</h3>
-                                    <p class="text-gray-400 text-sm">Open world, Action</p>
-                                    <div class="flex items-center gap-2 mt-2">
-                                        <span class="text-orange-400 text-sm font-semibold">$29.99</span>
-                                    </div>
-                                </div>
-                                <button class="text-red-400 hover:text-red-300 transition remove-item">
-                                    <i class="bi bi-trash3"></i>
-                                </button>
-                            </div>
-                            <div class="flex justify-between items-center mt-3">
-                                <div class="flex items-center gap-2">
-                                    <button class="quantity-btn w-7 h-7 rounded-md bg-gray-800 text-white hover:bg-blue-600 transition">-</button>
-                                    <span class="item-quantity w-8 text-center font-semibold">1</span>
-                                    <button class="quantity-btn w-7 h-7 rounded-md bg-gray-800 text-white hover:bg-blue-600 transition">+</button>
-                                </div>
-                                <span class="item-price font-bold text-white">$29.99</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Item 3 - Minecraft -->
-                <div class="cart-item bg-gradient-to-r from-gray-900/50 to-gray-950/50 rounded-xl border border-gray-800 p-4">
-                    <div class="flex gap-4">
-                        <img src="image/minecraft.jpg" alt="Minecraft" class="w-24 h-24 rounded-lg object-cover">
-                        <div class="flex-1">
-                            <div class="flex justify-between items-start">
-                                <div>
-                                    <h3 class="font-bold text-white text-lg">Minecraft</h3>
-                                    <p class="text-gray-400 text-sm">Sandbox, Survival</p>
-                                    <div class="flex items-center gap-2 mt-2">
-                                        <span class="text-orange-400 text-sm font-semibold">$26.99</span>
-                                    </div>
-                                </div>
-                                <button class="text-red-400 hover:text-red-300 transition remove-item">
-                                    <i class="bi bi-trash3"></i>
-                                </button>
-                            </div>
-                            <div class="flex justify-between items-center mt-3">
-                                <div class="flex items-center gap-2">
-                                    <button class="quantity-btn w-7 h-7 rounded-md bg-gray-800 text-white hover:bg-blue-600 transition">-</button>
-                                    <span class="item-quantity w-8 text-center font-semibold">2</span>
-                                    <button class="quantity-btn w-7 h-7 rounded-md bg-gray-800 text-white hover:bg-blue-600 transition">+</button>
-                                </div>
-                                <span class="item-price font-bold text-white">$53.98</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Kosong - akan muncul jika cart kosong -->
-                <div id="empty-cart-message" class="hidden text-center py-12 bg-gray-900/30 rounded-xl border border-gray-800">
-                    <i class="bi bi-cart-x text-6xl text-gray-600 mb-4"></i>
-                    <p class="text-gray-400 text-lg">Your cart is empty</p>
-                    <a href="games.html" class="inline-block mt-4 px-6 py-2 bg-blue-600 hover:bg-blue-500 rounded-lg transition">
-                        Browse Games
-                    </a>
-                </div>
-            </div>
-
-            <!-- Order Summary -->
+            <div class="lg:col-span-2 space-y-4" id="cart-items-container"></div>
             <div class="lg:col-span-1">
                 <div class="bg-gradient-to-b from-gray-900 to-gray-950 rounded-xl border border-gray-800 p-6 sticky top-24">
                     <h3 class="text-xl font-bold text-white mb-4">Order Summary</h3>
-                    
                     <div class="space-y-3 border-b border-gray-800 pb-4">
-                        <div class="flex justify-between text-gray-400">
-                            <span>Subtotal</span>
-                            <span id="subtotal">$83.97</span>
-                        </div>
-                        <div class="flex justify-between text-gray-400">
-                            <span>Discount</span>
-                            <span class="text-green-400">-$0.00</span>
-                        </div>
-                        <div class="flex justify-between text-gray-400">
-                            <span>Tax (10%)</span>
-                            <span id="tax">$8.40</span>
-                        </div>
+                        <div class="flex justify-between text-gray-400"><span>Subtotal</span><span id="subtotal">$0.00</span></div>
+                        <div class="flex justify-between text-gray-400"><span>Discount</span><span id="discount-amount" class="text-green-400">$0.00</span></div>
+                        <div class="flex justify-between text-gray-400"><span>Tax (10%)</span><span id="tax">$0.00</span></div>
                     </div>
-                    
                     <div class="flex justify-between mt-4 pb-4 border-b border-gray-800">
                         <span class="text-white font-bold text-lg">Total</span>
-                        <span class="text-blue-400 font-bold text-xl" id="total">$92.37</span>
+                        <span class="text-blue-400 font-bold text-xl" id="total">$0.00</span>
                     </div>
                     
                     <div class="mt-6 space-y-3">
-                        <div class="relative">
-                            <input type="text" placeholder="Promo Code" class="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-blue-500">
-                            <button class="absolute right-2 top-1/2 -translate-y-1/2 text-blue-400 text-sm font-semibold hover:text-blue-300">Apply</button>
+                        <div class="flex gap-2">
+                            <input type="text" id="promo-code-input" placeholder="Enter promo code" class="flex-1 px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white text-sm focus:outline-none focus:border-orange-500">
+                            <button id="apply-promo-btn" class="px-4 py-2 bg-orange-600 hover:bg-orange-500 rounded-lg text-white text-sm font-medium transition">Apply</button>
                         </div>
+                        <div class="mt-2 text-xs text-gray-500"><i class="bi bi-info-circle"></i> Available codes: SUMMER30 (30%), FLASH10 (10%)</div>
                         
-                        <button class="w-full btn-epic px-6 py-3 rounded-xl font-bold text-white shadow-xl flex items-center justify-center gap-2 checkout-btn">
+                        <button id="checkout-btn" class="w-full btn-epic px-6 py-3 rounded-xl font-bold text-white shadow-xl flex items-center justify-center gap-2">
                             <i class="bi bi-credit-card"></i> Proceed to Checkout
                         </button>
-                        
                         <button class="w-full btn-outline-epic px-6 py-3 rounded-xl font-semibold text-white flex items-center justify-center gap-2">
                             <i class="bi bi-arrow-left"></i> <a href="games.html">Continue Shopping</a>
                         </button>
                     </div>
-                    
-                    <div class="mt-6 pt-4 border-t border-gray-800">
-                        <p class="text-xs text-gray-500 text-center">
-                            <i class="bi bi-shield-check"></i> Secure payment guaranteed
-                        </p>
-                    </div>
+                    <div class="mt-6 pt-4 border-t border-gray-800"><p class="text-xs text-gray-500 text-center"><i class="bi bi-shield-check"></i> Secure payment guaranteed</p></div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Recommended Section -->
     <section class="py-12 px-4 max-w-7xl mx-auto border-t border-white/10">
-        <div class="text-center mb-8">
-            <h2 class="text-2xl md:text-3xl font-bold text-white mb-2">✨ YOU MAY ALSO LIKE</h2>
-            <p class="text-gray-400">Complete your gaming collection</p>
-        </div>
-        
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <!-- Card Fortnite -->
+        <div class="text-center mb-8"><h2 class="text-2xl md:text-3xl font-bold text-white mb-2">✨ YOU MAY ALSO LIKE</h2><p class="text-gray-400">Complete your gaming collection</p></div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" id="recommended-games">
             <div class="group bg-gradient-to-b from-gray-900 to-gray-950 rounded-xl overflow-hidden border border-gray-800 hover:border-blue-500/50 transition-all duration-300">
                 <img src="image/fortnite.jpg" alt="Fortnite" class="w-full h-40 object-cover">
                 <div class="p-4">
                     <h3 class="font-bold text-white">Fortnite</h3>
                     <p class="text-green-400 text-sm font-semibold mt-1">Free</p>
-                    <button class="w-full mt-3 px-4 py-2 bg-blue-600 hover:bg-blue-500 rounded-lg text-white text-sm font-medium transition add-to-cart-recommended">
+                    <button class="add-to-cart-rec w-full mt-3 px-4 py-2 bg-blue-600 hover:bg-blue-500 rounded-lg text-white text-sm font-medium transition" data-id="fortnite" data-name="Fortnite" data-price="0" data-image="image/fortnite.jpg" data-genre="Battle Royale">
                         <i class="bi bi-cart-plus mr-1"></i> Add to Cart
                     </button>
                 </div>
             </div>
-            
-            <!-- Card 2 -->
             <div class="group bg-gradient-to-b from-gray-900 to-gray-950 rounded-xl overflow-hidden border border-gray-800 hover:border-blue-500/50 transition-all duration-300">
                 <img src="image/valorant.jpg" alt="Valorant" class="w-full h-40 object-cover">
                 <div class="p-4">
                     <h3 class="font-bold text-white">Valorant</h3>
                     <p class="text-green-400 text-sm font-semibold mt-1">Free</p>
-                    <button class="w-full mt-3 px-4 py-2 bg-blue-600 hover:bg-blue-500 rounded-lg text-white text-sm font-medium transition add-to-cart-recommended">
+                    <button class="add-to-cart-rec w-full mt-3 px-4 py-2 bg-blue-600 hover:bg-blue-500 rounded-lg text-white text-sm font-medium transition" data-id="valorant" data-name="Valorant" data-price="0" data-image="image/valorant.jpg" data-genre="Tactical shooter, 5v5">
+                        <i class="bi bi-cart-plus mr-1"></i> Add to Cart
+                    </button>
+                </div>
+            </div>
+            <div class="group bg-gradient-to-b from-gray-900 to-gray-950 rounded-xl overflow-hidden border border-gray-800 hover:border-blue-500/50 transition-all duration-300">
+                <img src="image/gtav.jpg" alt="GTA V" class="w-full h-40 object-cover">
+                <div class="p-4">
+                    <h3 class="font-bold text-white">GTA V</h3>
+                    <p class="text-orange-400 text-sm font-semibold mt-1">$29.99</p>
+                    <button class="add-to-cart-rec w-full mt-3 px-4 py-2 bg-blue-600 hover:bg-blue-500 rounded-lg text-white text-sm font-medium transition" data-id="gta_v" data-name="GTA V" data-price="29.99" data-image="image/gtav.jpg" data-genre="Open world, Action">
+                        <i class="bi bi-cart-plus mr-1"></i> Add to Cart
+                    </button>
+                </div>
+            </div>
+            <div class="group bg-gradient-to-b from-gray-900 to-gray-950 rounded-xl overflow-hidden border border-gray-800 hover:border-blue-500/50 transition-all duration-300">
+                <img src="image/minecraft.jpg" alt="Minecraft" class="w-full h-40 object-cover">
+                <div class="p-4">
+                    <h3 class="font-bold text-white">Minecraft</h3>
+                    <p class="text-orange-400 text-sm font-semibold mt-1">$26.99</p>
+                    <button class="add-to-cart-rec w-full mt-3 px-4 py-2 bg-blue-600 hover:bg-blue-500 rounded-lg text-white text-sm font-medium transition" data-id="minecraft" data-name="Minecraft" data-price="26.99" data-image="image/minecraft.jpg" data-genre="Sandbox, Survival">
                         <i class="bi bi-cart-plus mr-1"></i> Add to Cart
                     </button>
                 </div>
@@ -320,32 +273,45 @@
     <footer class="border-t border-white/10 bg-black/40 pt-12 pb-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-5 gap-8">
-                <div class="col-span-2">
-                    <div class="flex items-center gap-2">
-                        <img src="image/LOGO.png" alt="D'GAMES" class="h-8 w-auto"/>
-                    </div>
-                    <p class="text-gray-400 text-sm mt-3">The ultimate destination for PC & console gamers. Next-level entertainment.</p>
-                    <div class="flex gap-4 mt-5">
-                        <i class="bi bi-twitter-x text-gray-400 hover:text-white text-xl cursor-pointer"></i>
-                        <i class="bi bi-discord text-gray-400 hover:text-white text-xl cursor-pointer"></i>
-                        <a href="https://www.instagram.com/denn_2307/">
-                            <i class="bi bi-instagram text-gray-400 hover:text-white text-xl cursor-pointer"></i>
-                        </a>
-                        <i class="bi bi-youtube text-gray-400 hover:text-white text-xl cursor-pointer"></i>
-                    </div>
-                </div>
+                <div class="col-span-2"><div class="flex items-center gap-2"><img src="image/LOGO.png" alt="D'GAMES" class="h-8 w-auto"/></div><p class="text-gray-400 text-sm mt-3">The ultimate destination for PC & console gamers. Next-level entertainment.</p><div class="flex gap-4 mt-5"><i class="bi bi-twitter-x text-gray-400 hover:text-white text-xl cursor-pointer"></i><i class="bi bi-discord text-gray-400 hover:text-white text-xl cursor-pointer"></i><a href="https://www.instagram.com/denn_2307/"><i class="bi bi-instagram text-gray-400 hover:text-white text-xl cursor-pointer"></i></a><i class="bi bi-youtube text-gray-400 hover:text-white text-xl cursor-pointer"></i></div></div>
                 <div><h4 class="font-bold text-white">Discover</h4><ul class="mt-3 space-y-2 text-gray-400 text-sm"><li>Browse Store</li><li>Free Games</li><li>DENZ Originals</li><li>Coming Soon</li></ul></div>
                 <div><h4 class="font-bold text-white">Support</h4><ul class="mt-3 space-y-2 text-gray-400 text-sm"><li>Help Center</li><li>Refund Policy</li><li>Account</li><li>Parental Guide</li></ul></div>
                 <div><h4 class="font-bold text-white">Legal</h4><ul class="mt-3 space-y-2 text-gray-400 text-sm"><li>Terms of Service</li><li>Privacy Policy</li><li>Store Agreement</li><li>Cookies Settings</li></ul></div>
             </div>
-            <div class="border-t border-white/5 mt-10 pt-6 text-center text-gray-500 text-xs">
-                © 2026 D'GAMES — Built for gamers, supported by Denis Ganteng.
-            </div>
+            <div class="border-t border-white/5 mt-10 pt-6 text-center text-gray-500 text-xs">© 2026 D'GAMES — Built for gamers, supported by Denis Ganteng.</div>
         </div>
     </footer>
 
+    <script src="auth.js"></script>
     <script>
     const CART_STORAGE_KEY = 'shopping_cart';
+    let activePromos = [];
+    
+    const AVAILABLE_PROMOS = [
+        { code: "SUMMER30", discount: 30 },
+        { code: "FLASH10", discount: 10 }
+    ];
+
+    // Database genre/deskripsi game (sama dengan games.html)
+    const GAME_GENRES = {
+        'cyberpunk': 'Open World RPG',
+        'valorant': 'Tactical shooter, 5v5',
+        'gta_v': 'Open world, Action',
+        'minecraft': 'Sandbox, Survival',
+        'counter_strike_2': 'Tactical FPS',
+        'spiderman2': 'Action Adventure',
+        'god_of_war_ragnarok': 'Action RPG',
+        'red_dead_redemption_2': 'Western Open World',
+        'genshin_impact': 'Open World RPG',
+        'overwatch_2': 'Hero Shooter',
+        'the_last_of_us_part_ii_remastered': 'Survival Horror',
+        'ea_fc_26': 'Sports',
+        'fortnite': 'Battle Royale'
+    };
+
+    function getGenre(genreKey) {
+        return GAME_GENRES[genreKey] || 'Premium Game';
+    }
 
     function getCart() {
         const stored = localStorage.getItem(CART_STORAGE_KEY);
@@ -356,167 +322,257 @@
         localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
         renderCart();
         updateCartBadge();
+        window.dispatchEvent(new Event('cart-updated'));
     }
 
     function updateCartBadge() {
         const cart = getCart();
-        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+        const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
         const badge = document.querySelector('.cart-badge');
-        if (badge) {
+        if(badge) {
             badge.textContent = totalItems;
             badge.style.display = totalItems > 0 ? 'flex' : 'none';
         }
     }
 
-    function showToast(message) {
+    function showToast(message, type = 'info') {
         const toast = document.createElement('div');
-        toast.textContent = message;
-        toast.style.cssText = `
-            position: fixed; bottom: 20px; right: 20px;
-            background: #1f2937; color: white; padding: 10px 20px;
-            border-radius: 12px; border-left: 4px solid #3b82f6;
-            z-index: 9999; animation: slideInRight 0.3s ease;
-        `;
+        toast.className = 'toast-notify';
+        let icon = type === 'success' ? '✅' : '⚠️';
+        toast.innerHTML = `${icon} ${message}`;
         document.body.appendChild(toast);
-        setTimeout(() => toast.remove(), 2000);
+        setTimeout(() => toast.remove(), 2200);
+    }
+
+    function calculateTotalDiscount(subtotal) {
+        if (activePromos.length === 0) return 0;
+        let discountedPrice = subtotal;
+        let totalDiscount = 0;
+        for (const promo of activePromos) {
+            const discountAmount = discountedPrice * (promo.discount / 100);
+            totalDiscount += discountAmount;
+            discountedPrice -= discountAmount;
+        }
+        return totalDiscount;
     }
 
     function renderCart() {
         const cart = getCart();
-        const container = document.querySelector('.lg\\:col-span-2 .space-y-4');
-        const emptyMsg = document.getElementById('empty-cart-message');
-
+        const container = document.getElementById('cart-items-container');
         if (!container) return;
-
+        
         if (cart.length === 0) {
-            container.innerHTML = '';
-            if (emptyMsg) emptyMsg.classList.remove('hidden');
+            container.innerHTML = `<div class="text-center py-12 bg-gray-900/30 rounded-xl border border-gray-800"><i class="bi bi-cart-x text-6xl text-gray-600 mb-4"></i><p class="text-gray-400 text-lg">Your cart is empty</p><a href="games.html" class="inline-block mt-4 px-6 py-2 bg-blue-600 hover:bg-blue-500 rounded-lg transition">Browse Games</a></div>`;
             document.getElementById('subtotal').textContent = '$0.00';
+            document.getElementById('discount-amount').textContent = '$0.00';
             document.getElementById('tax').textContent = '$0.00';
             document.getElementById('total').textContent = '$0.00';
             updateCartBadge();
             return;
         }
-
-        if (emptyMsg) emptyMsg.classList.add('hidden');
-
+        
         let subtotal = 0;
         let html = '';
         cart.forEach(item => {
-            const totalItemPrice = item.price * item.quantity;
+            const safePrice = typeof item.price === 'number' ? item.price : 0;
+            const totalItemPrice = safePrice * (item.quantity || 1);
             subtotal += totalItemPrice;
-            html += `
-                <div class="cart-item bg-gradient-to-r from-gray-900/50 to-gray-950/50 rounded-xl border border-gray-800 p-4" data-id="${item.id}">
-                    <div class="flex gap-4">
-                        <img src="${item.image}" alt="${item.name}" class="w-24 h-24 rounded-lg object-cover">
-                        <div class="flex-1">
-                            <div class="flex justify-between items-start">
-                                <div>
-                                    <h3 class="font-bold text-white text-lg">${item.name}</h3>
-                                    <p class="text-gray-400 text-sm">${item.price === 0 ? 'Free' : 'Paid'}</p>
-                                    <div class="flex items-center gap-2 mt-2">
-                                        <span class="${item.price === 0 ? 'text-green-400' : 'text-orange-400'} text-sm font-semibold">
-                                            ${item.price === 0 ? 'Free' : '$' + item.price.toFixed(2)}
-                                        </span>
+            const totalDisplay = safePrice === 0 ? 'Free' : '$' + totalItemPrice.toFixed(2);
+            // Ambil genre dari item.id atau item.name
+            let genreKey = item.id ? item.id.toLowerCase().replace(/[^a-z0-9]/g, '_') : '';
+            if (!GAME_GENRES[genreKey]) {
+                // Coba dari nama
+                genreKey = item.name.toLowerCase().replace(/[^a-z0-9]/g, '_');
+            }
+            const genre = GAME_GENRES[genreKey] || (safePrice === 0 ? 'Free to Play' : 'Premium Game');
+            
+            html += `<div class="cart-item bg-gradient-to-r from-gray-900/50 to-gray-950/50 rounded-xl border border-gray-800 p-4" data-id="${item.id}">
+                        <div class="flex gap-4">
+                            <img src="${item.image}" alt="${item.name}" class="w-24 h-24 rounded-lg object-cover" onerror="this.src='https://placehold.co/400x300?text=Game'">
+                            <div class="flex-1">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <h3 class="font-bold text-white text-lg">${item.name}</h3>
+                                        <p class="text-gray-400 text-sm">${genre}</p>
                                     </div>
+                                    <button class="remove-item-btn text-red-400 hover:text-red-300 transition" data-id="${item.id}"><i class="bi bi-trash3"></i></button>
                                 </div>
-                                <button class="remove-item-btn text-red-400 hover:text-red-300 transition" data-id="${item.id}">
-                                    <i class="bi bi-trash3"></i>
-                                </button>
-                            </div>
-                            <div class="flex justify-between items-center mt-3">
-                                <div class="flex items-center gap-2">
-                                    <button class="qty-minus w-7 h-7 rounded-md bg-gray-800 text-white hover:bg-blue-600 transition" data-id="${item.id}">-</button>
-                                    <span class="item-qty w-8 text-center font-semibold">${item.quantity}</span>
-                                    <button class="qty-plus w-7 h-7 rounded-md bg-gray-800 text-white hover:bg-blue-600 transition" data-id="${item.id}">+</button>
+                                <div class="flex justify-between items-center mt-3">
+                                    <div class="flex items-center gap-2">
+                                        <button class="qty-minus w-7 h-7 rounded-md bg-gray-800 text-white hover:bg-blue-600 transition" data-id="${item.id}">-</button>
+                                        <span class="item-qty w-8 text-center font-semibold">${item.quantity || 1}</span>
+                                        <button class="qty-plus w-7 h-7 rounded-md bg-gray-800 text-white hover:bg-blue-600 transition" data-id="${item.id}">+</button>
+                                    </div>
+                                    <span class="item-total-price font-bold text-white ${safePrice === 0 ? 'text-green-400' : 'text-orange-400'}">${totalDisplay}</span>
                                 </div>
-                                <span class="item-total-price font-bold text-white">${item.price === 0 ? 'Free' : '$' + totalItemPrice.toFixed(2)}</span>
                             </div>
                         </div>
-                    </div>
-                </div>
-            `;
+                    </div>`;
         });
         container.innerHTML = html;
 
-        const tax = subtotal * 0.1;
-        const total = subtotal + tax;
+        const totalDiscount = calculateTotalDiscount(subtotal);
+        const afterDiscount = subtotal - totalDiscount;
+        const tax = afterDiscount * 0.1;
+        const total = afterDiscount + tax;
+        
         document.getElementById('subtotal').textContent = '$' + subtotal.toFixed(2);
+        document.getElementById('discount-amount').innerHTML = totalDiscount > 0 ? `<span class="text-green-400">-$${totalDiscount.toFixed(2)}</span>` : '$0.00';
         document.getElementById('tax').textContent = '$' + tax.toFixed(2);
         document.getElementById('total').textContent = '$' + total.toFixed(2);
-
-        // Event untuk tombol +, -, hapus
+        
+        attachCartItemEvents();
+    }
+    
+    function attachCartItemEvents() {
         document.querySelectorAll('.qty-minus').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const id = btn.getAttribute('data-id');
-                let cart = getCart();
-                const item = cart.find(i => i.id === id);
-                if (item && item.quantity > 1) {
-                    item.quantity--;
-                    saveCart(cart);
-                    showToast('📦 Quantity updated');
-                } else if (item && item.quantity === 1) {
-                    const newCart = cart.filter(i => i.id !== id);
-                    saveCart(newCart);
-                    showToast(`🗑️ ${item.name} removed`);
-                }
-            });
+            btn.removeEventListener('click', handleMinus);
+            btn.addEventListener('click', handleMinus);
         });
-
         document.querySelectorAll('.qty-plus').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const id = btn.getAttribute('data-id');
-                let cart = getCart();
-                const item = cart.find(i => i.id === id);
-                if (item) {
-                    item.quantity++;
-                    saveCart(cart);
-                    showToast('📦 Quantity updated');
-                }
-            });
+            btn.removeEventListener('click', handlePlus);
+            btn.addEventListener('click', handlePlus);
         });
-
         document.querySelectorAll('.remove-item-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const id = btn.getAttribute('data-id');
-                let cart = getCart();
-                const removed = cart.find(i => i.id === id);
-                cart = cart.filter(i => i.id !== id);
-                saveCart(cart);
-                if (removed) showToast(`🗑️ ${removed.name} removed`);
-            });
+            btn.removeEventListener('click', handleRemove);
+            btn.addEventListener('click', handleRemove);
         });
     }
-
-    // Checkout
-    document.querySelector('.checkout-btn')?.addEventListener('click', () => {
+    
+    function handleMinus(e) {
+        const id = e.currentTarget.getAttribute('data-id');
+        let cart = getCart();
+        const item = cart.find(i => i.id === id);
+        if (item && (item.quantity || 1) > 1) {
+            item.quantity = (item.quantity || 1) - 1;
+            saveCart(cart);
+            showToast('📦 Quantity updated', 'info');
+        } else if (item && (item.quantity || 1) === 1) {
+            const newCart = cart.filter(i => i.id !== id);
+            saveCart(newCart);
+            showToast(`🗑️ ${item.name} removed`, 'info');
+        }
+    }
+    
+    function handlePlus(e) {
+        const id = e.currentTarget.getAttribute('data-id');
+        let cart = getCart();
+        const item = cart.find(i => i.id === id);
+        if (item) {
+            item.quantity = (item.quantity || 1) + 1;
+            saveCart(cart);
+            showToast('📦 Quantity updated', 'info');
+        }
+    }
+    
+    function handleRemove(e) {
+        const id = e.currentTarget.getAttribute('data-id');
+        let cart = getCart();
+        const removed = cart.find(i => i.id === id);
+        cart = cart.filter(i => i.id !== id);
+        saveCart(cart);
+        if (removed) showToast(`🗑️ ${removed.name} removed from cart`, 'info');
+    }
+    
+    function proceedToCheckout() {
         const cart = getCart();
         if (cart.length === 0) {
-            showToast('⚠️ Your cart is empty!');
-        } else {
-            showToast('🎉 Proceeding to checkout...');
-            setTimeout(() => {
-                alert('Thank you for your purchase! 🎮');
-                localStorage.removeItem(CART_STORAGE_KEY);
-                renderCart();
-                updateCartBadge();
-            }, 1000);
+            showToast('⚠️ Your cart is empty! Add some games first.', 'error');
+            return;
         }
-    });
-
-    // Inisialisasi
+        const checkoutBtn = document.getElementById('checkout-btn');
+        const originalText = checkoutBtn.innerHTML;
+        checkoutBtn.innerHTML = '<i class="bi bi-hourglass-split"></i> Redirecting...';
+        checkoutBtn.disabled = true;
+        setTimeout(() => {
+            window.location.href = 'payment.html';
+        }, 500);
+    }
+    
+    function addToCartDirect(id, name, price, image, genre) {
+        let cart = getCart();
+        const existingItem = cart.find(item => item.id === id);
+        const safePrice = typeof price === 'number' ? price : 0;
+        if (existingItem) {
+            existingItem.quantity = (existingItem.quantity || 1) + 1;
+        } else {
+            cart.push({ id, name, price: safePrice, image, quantity: 1 });
+        }
+        saveCart(cart);
+        showToast(`✅ ${name} added to cart!`, 'success');
+    }
+    
     document.addEventListener('DOMContentLoaded', () => {
         renderCart();
         updateCartBadge();
+        
+        const checkoutBtn = document.getElementById('checkout-btn');
+        if (checkoutBtn) checkoutBtn.addEventListener('click', proceedToCheckout);
+        
+        const applyBtn = document.getElementById('apply-promo-btn');
+        const promoInput = document.getElementById('promo-code-input');
+        if (applyBtn && promoInput) {
+            applyBtn.addEventListener('click', () => {
+                const code = promoInput.value.trim().toUpperCase();
+                if (code) {
+                    const found = AVAILABLE_PROMOS.find(p => p.code === code);
+                    if (found) {
+                        if (!activePromos.some(p => p.code === code)) {
+                            activePromos.push(found);
+                            showToast(`✅ Promo code "${code}" applied! ${found.discount}% discount`, 'success');
+                            renderCart();
+                        } else {
+                            showToast(`⚠️ Promo code "${code}" already applied!`, 'error');
+                        }
+                    } else {
+                        showToast('❌ Invalid promo code!', 'error');
+                    }
+                    promoInput.value = '';
+                }
+            });
+        }
+        
+        document.querySelectorAll('.add-to-cart-rec').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const id = btn.getAttribute('data-id');
+                const name = btn.getAttribute('data-name');
+                const price = parseFloat(btn.getAttribute('data-price')) || 0;
+                const image = btn.getAttribute('data-image');
+                const genre = btn.getAttribute('data-genre') || '';
+                addToCartDirect(id, name, price, image, genre);
+            });
+        });
+        
+        const mobileBtn = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-nav-links');
+        if (mobileBtn && mobileMenu) {
+            mobileBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+        }
+        
+        const notifBtn = document.getElementById('notifBtn');
+        if (notifBtn) {
+            notifBtn.addEventListener('click', () => showToast('🔔 No new notifications', 'info'));
+        }
+        
+        const searchBtn = document.getElementById('searchBtn');
+        if (searchBtn) {
+            searchBtn.addEventListener('click', () => showToast('🔍 Search feature coming soon', 'info'));
+        }
+        
+        const loginBtnNav = document.getElementById('loginButton');
+        if (loginBtnNav) {
+            loginBtnNav.addEventListener('click', () => window.location.href = 'login.html');
+        }
+        
+        window.addEventListener('storage', (e) => {
+            if (e.key === CART_STORAGE_KEY) {
+                renderCart();
+                updateCartBadge();
+            }
+        });
+        window.addEventListener('cart-updated', () => { renderCart(); });
     });
     </script>
     <script src="cart.js"></script>
-    <script>
-    (function(){
-        var btn = document.getElementById('mobile-menu-button');
-        var menu = document.getElementById('mobile-nav-links');
-        if(btn && menu){ btn.addEventListener('click', function(){ menu.classList.toggle('hidden'); }); }
-    })();
-    </script>
 </body>
 </html>
